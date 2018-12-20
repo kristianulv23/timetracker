@@ -5,6 +5,7 @@ export interface IDefaultButtonProps {
     text: string;
     className?: string;
     onClick?: () => void;
+    disabled?: boolean;
 }
 
 export class DefaultButton extends React.Component<IDefaultButtonProps, {}> {
@@ -19,9 +20,9 @@ export class DefaultButton extends React.Component<IDefaultButtonProps, {}> {
     }
 
     render() {
-        const { text, onClick, className } = this.props;
+        const { text, onClick, className, disabled } = this.props;
         return (
-            <button onClick={() => onClick()} className={DefaultButton.styleClass.button(className)}>{text}</button>
+            <button onClick={() => onClick()} className={DefaultButton.styleClass.button(className)} disabled={disabled}>{text}</button>
         );
     }
 }

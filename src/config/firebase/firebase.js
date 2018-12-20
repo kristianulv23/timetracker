@@ -26,8 +26,20 @@ export const getTasks = () => {
 }
 
 export const addTask = (task, time, description) => {
-    console.log('description', description);
     let id = database.ref('tasks').push().key;
     let model = taskModel(id, task, time, description, firebase.database.ServerValue.TIMESTAMP);
     return database.ref('tasks/' + id).set(model);
+}
+
+export const updateTask = (taskId, time) => {
+    console.log('time: ', time);
+    database.ref(`tasks/${taskId}`).update({
+        time: time
+    }, function (error) {
+        if (error) {
+            console.log('Writing to database failed: ', error);
+        } else {
+            console.log('Data saved successfully!');
+        }
+    });
 }

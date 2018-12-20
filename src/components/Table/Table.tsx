@@ -60,7 +60,7 @@ class Table extends React.Component<ITableProps, ITableState> {
         const { updateModalState } = this.props;
         return (
             <div className={Table.styleClass.root}>
-            {state.active ? <Modal onclick={() => this.hasChanged()}/> : null}
+                {state.active ? <Modal onclick={() => this.hasChanged()} /> : null}
                 <table className={Table.styleClass.table}>
                     <thead>
                         <tr>
@@ -100,9 +100,11 @@ class Table extends React.Component<ITableProps, ITableState> {
     private snapshotToArray = (snapshot: any) => {
         let array = [];
         snapshot.forEach(element => {
-            Object.keys(element).map((e) => {
-                array.push(element[e])
-            })
+            if (element) {
+                Object.keys(element).map((e) => {
+                    array.push(element[e])
+                })
+            }
         });
         return array;
     };
