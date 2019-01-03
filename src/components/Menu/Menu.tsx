@@ -21,6 +21,10 @@ export interface IMenuProps extends IWithMenuContext {
 
 class Menu extends React.Component<IMenuProps, {}> {
 
+    constructor(props) {
+        super(props);
+    }
+
     static styleClass = {
         root: (active: boolean) => classNames(
             'ulv__fixed',
@@ -28,7 +32,8 @@ class Menu extends React.Component<IMenuProps, {}> {
             'ulv__bg-green-primary',
             'ulv__h-full',
             'ulv__w-64',
-            active ? 'closeModal' : 'openModal'
+            'ulv__ml-64',
+            active ? 'openMenu' : 'closeMenu'
         ),
         list_wrapper: classNames(
             'ulv__absolute',
@@ -48,6 +53,10 @@ class Menu extends React.Component<IMenuProps, {}> {
                 </div>
             </div>
         );
+    }
+
+    componentDidMount() {
+        
     }
 }
 

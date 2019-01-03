@@ -1,7 +1,7 @@
 import * as React from "react";
 import { classNames, convertToHHMMSS } from "../../../utils/utils";
 import { DefaultButton } from '../shared/Button/DefaultButton/DefaultButton';
-import { updateTask } from '../../config/firebase/firebase';
+import { updateTask, deleteTask } from '../../config/firebase/firebase';
 
 export interface ITableRowProps {
     id: string;
@@ -15,6 +15,7 @@ export interface ITableRowState {
     interval: any;
     paused: boolean;
     active: boolean;
+    isDeletingTask: boolean;
 }
 
 class TableRow extends React.Component<ITableRowProps, ITableRowState> {
@@ -25,7 +26,8 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
             time: 0,
             interval: null,
             paused: false,
-            active: true
+            active: true,
+            isDeletingTask: false
         }
     }
 
@@ -34,12 +36,11 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
 
         ),
         play: (active) => classNames(
-            active ? 'ulv__bg-green' : 'ulv__bg-grey ulv__cursor-not-allowed',
+            active ? 'ulv__bg-green' : 'ulv__bg-grey',
             'ulv__w-24'
         ),
-        pause: classNames(
-            'ulv__bg-orange',
-            'ulv__w-24'
+        delete: classNames(
+            'ulv__bg-red-dark'
         )
     }
 
@@ -60,8 +61,8 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
                         <td>{task}</td>
                         <td>{description}</td>
                         <td>{convertToHHMMSS(time)}</td>
-                        <td><DefaultButton className={TableRow.styleClass.play(active)} text={"Start"} onClick={() => this.play()} disabled={!active}/></td>
-                        <td><DefaultButton className={TableRow.styleClass.pause} text={"Pause"} onClick={() => this.pause()} /></td>
+                        <td><DefaultButton className={TableRow.styleClass.play(active)} text={active ? 'Start' : 'Pause'} onClick={() => this.play()} /></td>
+                        <td><DefaultButton className={TableRow.styleClass.delete} text={'Slett'} onClick={() => this.delete()} /></td>
                     </React.Fragment>
                 }
             </tr>
@@ -69,32 +70,42 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
     }
 
     private play = () => {
-        const { time, active } = this.state;
-        let count = time;
-        let intervalId = setInterval(() => {
-            count++;
+        const { time, active, interval } = this.state;
+        let seconds = time;
+        if (active) {
+            let intervalId = setInterval(() => {
+                seconds++;
+                this.setState({
+                    time: seconds
+                });
+            }, 1000);
             this.setState({
-                time: count
+                interval: intervalId,
+                active: !active,
+                time: seconds
             });
-        }, 1000);
-        this.setState({
-            interval: intervalId,
-            active: !active
-        })
+        } else {
+            this.setState({
+                active: !active
+            });
+            clearInterval(interval);
+        }
+
     }
 
-    private pause = () => {
-        const { interval, active } = this.state;
+    private delete = () => {
+        const { id } = this.props;
+        const { isDeletingTask } = this.state;
+        deleteTask(id);
         this.setState({
-            active: !active
+            isDeletingTask: !isDeletingTask
         })
-        clearInterval(interval);
     }
 
     componentWillUnmount() {
-        const { time } = this.state;
+        const { time, isDeletingTask } = this.state;
         const { id } = this.props;
-        if (time > 0) {
+        if (time > 0 && !isDeletingTask) {
             updateTask(id, time);
         }
     }

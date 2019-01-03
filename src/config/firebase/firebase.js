@@ -32,7 +32,6 @@ export const addTask = (task, time, description) => {
 }
 
 export const updateTask = (taskId, time) => {
-    console.log('time: ', time);
     database.ref(`tasks/${taskId}`).update({
         time: time
     }, function (error) {
@@ -42,4 +41,8 @@ export const updateTask = (taskId, time) => {
             console.log('Data saved successfully!');
         }
     });
+}
+
+export const deleteTask = (taskId) => {
+    database.ref(`tasks/${taskId}`).remove();
 }

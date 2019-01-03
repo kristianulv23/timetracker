@@ -28,7 +28,7 @@ class MenuContextProvider extends Component<any, IMenuState> {
     }
 
     private toggleMenu = () => {
-        const {active} = this.state;
+        const { active } = this.state;
         this.setState({
             active: !active
         })

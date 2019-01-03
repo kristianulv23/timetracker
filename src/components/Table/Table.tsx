@@ -65,8 +65,8 @@ class Table extends React.Component<ITableProps, ITableState> {
                     <thead>
                         <tr>
                             <th>Jira oppgave</th>
+                            <th>Beskrivelse</th>
                             <th>Tid brukt</th>
-                            <th></th>
                             <th></th>
                             <th>
                                 <DefaultButton className={Table.styleClass.button} text={"Ny oppgave"} onClick={() => updateModalState()} />
@@ -86,7 +86,9 @@ class Table extends React.Component<ITableProps, ITableState> {
     }
 
     private hasChanged = () => {
-        this.getDataFromFirebase()
+        const { updateModalState } = this.props;
+        this.getDataFromFirebase();
+        updateModalState();
     }
 
     private getDataFromFirebase = () => {

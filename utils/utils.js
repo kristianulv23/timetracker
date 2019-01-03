@@ -25,13 +25,13 @@ export function classNames(...args) {
 }
 
 export function convertToHHMMSS(time) {
-    if(time === 0) return '0 sekunder';
+    if(time === 0) return '00:00:00';
     var h = Math.floor(time / 3600);
     var m = Math.floor(time % 3600 / 60);
     var s = Math.floor(time % 3600 % 60);
 
-    var hDisplay = h > 0 ? h + (h == 1 ? " time og " : " timer og ") : "";
-    var mDisplay = m > 0 ? m + (m == 1 ? " minutt og " : " minutter og ") : "";
-    var sDisplay = s > 0 ? s + (s == 1 ? " sekund" : " sekunder") : "";
-    return hDisplay + mDisplay + sDisplay;
+    var hDisplay = h > 9 ? h : `0${h}`;
+    var mDisplay = m > 9 ? m : `0${m}`;
+    var sDisplay = s > 9 ? s : `0${s}`;
+    return `${hDisplay}:${mDisplay}:${sDisplay}`;
 }

@@ -11,7 +11,7 @@ export class HamburgerButton extends React.Component<IHamburgerButtonProps, {}> 
         const { active, toggleMenu } = this.props;
         return (
             <div className={`hamburger-wrapper ${active ? 'fadeOut' : 'fadeIn'}`} onClick={() => toggleMenu()}>
-                <div className={`hamburger-menu ${active ? '' : 'open'}`}>
+                <div className={`hamburger-menu ${active ? 'open' : ''}`}>
                     <span></span>
                     <span></span>
                     <span></span>

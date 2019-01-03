@@ -1,0 +1,71 @@
+/* MENU ANIMATION */
+
+.closeMenu {
+    -webkit-animation: close .5s forwards;
+	-moz-animation: close .5s forwards;
+    animation: close .5s forwards;
+}
+
+.openMenu {
+    -webkit-animation: open .5s forwards;
+	-moz-animation: open .5s forwards;
+    animation: open .5s forwards;
+}
+
+/* CLOSE */
+
+@-webkit-keyframes close {
+	0% {
+		margin-left: 0;
+	}
+	100% {
+		margin-left: -16rem;
+	}
+}
+
+@-moz-keyframes close {
+	0% {
+		margin-left: 0;
+	}
+	100% {
+		margin-left: -16rem;
+	}
+}
+
+@keyframes close {
+	0% {
+		margin-left: 0;
+	}
+	100% {
+		margin-left: -16rem;
+	}
+}
+
+/* OPEN */
+
+@-webkit-keyframes open {
+	0% {
+		margin-left: -16rem;
+	}
+	100% {
+		margin-left: 0;
+	}
+}
+
+@-moz-keyframes open {
+	0% {
+		margin-left: -16rem;
+	}
+	100% {
+		margin-left: 0;
+	}
+}
+
+@keyframes open {
+	0% {
+		margin-left: -16rem;
+	}
+	100% {
+		margin-left: 0;
+	}
+}
