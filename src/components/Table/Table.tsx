@@ -68,6 +68,7 @@ class Table extends React.Component<ITableProps, ITableState> {
                             <th>Beskrivelse</th>
                             <th>Tid brukt</th>
                             <th></th>
+                            <th></th>
                             <th>
                                 <DefaultButton className={Table.styleClass.button} text={"Ny oppgave"} onClick={() => updateModalState()} />
                             </th>
@@ -76,7 +77,7 @@ class Table extends React.Component<ITableProps, ITableState> {
                     <tbody>
                         {
                             data.map((task) => {
-                                return <TableRow key={task.id} {...task} />
+                                return <TableRow key={task.id} {...task} updateData={this.getDataFromFirebase}/>
                             })
                         }
                     </tbody>

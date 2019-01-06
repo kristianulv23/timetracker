@@ -8,6 +8,7 @@ export interface ITableRowProps {
     task: string;
     time: number;
     description: string;
+    updateData: () => void;
 }
 
 export interface ITableRowState {
@@ -36,11 +37,16 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
 
         ),
         play: (active) => classNames(
-            active ? 'ulv__bg-green' : 'ulv__bg-grey',
+            active ? 'ulv__bg-green hover__ulv__bg-green-dark' : 'ulv__bg-grey hover__ulv__bg-grey-dark',
             'ulv__w-24'
         ),
         delete: classNames(
-            'ulv__bg-red-dark'
+            'ulv__bg-red-dark',
+            'hover__ulv__bg-red-darker'
+        ),
+        reset: classNames(
+            'ulv__bg-grey-dark',
+            'hover__ulv__bg-grey-darker'
         )
     }
 
@@ -63,6 +69,7 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
                         <td>{convertToHHMMSS(time)}</td>
                         <td><DefaultButton className={TableRow.styleClass.play(active)} text={active ? 'Start' : 'Pause'} onClick={() => this.play()} /></td>
                         <td><DefaultButton className={TableRow.styleClass.delete} text={'Slett'} onClick={() => this.delete()} /></td>
+                        <td><DefaultButton className={TableRow.styleClass.reset} text={'Nullstill'} onClick={() => this.reset()} /></td>
                     </React.Fragment>
                 }
             </tr>
@@ -70,6 +77,7 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
     }
 
     private play = () => {
+        const { id } = this.props;
         const { time, active, interval } = this.state;
         let seconds = time;
         if (active) {
@@ -90,16 +98,23 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
             });
             clearInterval(interval);
         }
+        updateTask(id, seconds);
+    }
 
+    private reset = () => {
+        const { id } = this.props;
+        this.setState({
+            time: 0
+        }, updateTask(id, 0))
     }
 
     private delete = () => {
-        const { id } = this.props;
+        const { id, updateData } = this.props;
         const { isDeletingTask } = this.state;
-        deleteTask(id);
         this.setState({
             isDeletingTask: !isDeletingTask
-        })
+        }, deleteTask(id))
+        updateData();
     }
 
     componentWillUnmount() {
