@@ -77,7 +77,7 @@ class Table extends React.Component<ITableProps, ITableState> {
                     <tbody>
                         {
                             data.map((task) => {
-                                return <TableRow key={task.id} {...task} updateData={this.getDataFromFirebase}/>
+                                return <TableRow key={task.id} {...task} updateTable={this.getDataFromFirebase}/>
                             })
                         }
                     </tbody>

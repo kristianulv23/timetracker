@@ -32,10 +32,11 @@ export class App extends React.Component<IAppProps, {}> {
             <div className={App.styleClass.root}>
                 <MenuContextProvider>
                     <ModalContextProvider>
-                        <Body />
-                        <Route path="/" component={Home} />
-                        <Route path="/oppgaver" component={Table} />
-                        <Route path="/create" component={Modal} />
+                        <Body>
+                            <Route path="/" component={Home} />
+                            <Route path="/oppgaver" component={Table} />
+                            <Route path="/create" component={Modal} />
+                        </Body>
                     </ModalContextProvider>
                 </MenuContextProvider>
             </div>

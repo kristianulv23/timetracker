@@ -8,7 +8,7 @@ export interface ITableRowProps {
     task: string;
     time: number;
     description: string;
-    updateData: () => void;
+    updateTable: () => void;
 }
 
 export interface ITableRowState {
@@ -102,19 +102,22 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
     }
 
     private reset = () => {
+        const { interval, active, time } = this.state;
         const { id } = this.props;
         this.setState({
-            time: 0
+            time: 0,
+            active: !active
         }, updateTask(id, 0))
+        clearInterval(interval);
     }
 
     private delete = () => {
-        const { id, updateData } = this.props;
+        const { id, updateTable } = this.props;
         const { isDeletingTask } = this.state;
         this.setState({
             isDeletingTask: !isDeletingTask
         }, deleteTask(id))
-        updateData();
+        updateTable();
     }
 
     componentWillUnmount() {

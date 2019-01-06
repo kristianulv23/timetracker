@@ -17,10 +17,18 @@ const styles = {
 
 export default class Body extends React.Component<IBodyProps, {}> {
 
+    constructor(props) {
+        super(props);
+    }
+
     render() {
+        const { children } = this.props;
         return (
             <div className={styles.root}>
                 <Menu />
+                <div className={'ulv__w-full ulv__h-full'}>
+                    {children}
+                </div>
             </div>
         );
     }
