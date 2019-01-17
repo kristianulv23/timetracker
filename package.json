@@ -6,7 +6,7 @@
   "author": "Kristian Ulvund",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server --mode development --open",
+    "start": "webpack-dev-server --mode development --port 8082 --open",
     "build": "webpack --mode production"
   },
   "dependencies": {

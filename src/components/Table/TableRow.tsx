@@ -61,18 +61,18 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
         const { time, active } = this.state;
         const { id, task, description } = this.props;
         return (
-            <tr key={id}>
-                {
-                    <React.Fragment>
-                        <td>{task}</td>
-                        <td>{description}</td>
-                        <td>{convertToHHMMSS(time)}</td>
-                        <td><DefaultButton className={TableRow.styleClass.play(active)} text={active ? 'Start' : 'Pause'} onClick={() => this.play()} /></td>
-                        <td><DefaultButton className={TableRow.styleClass.delete} text={'Slett'} onClick={() => this.delete()} /></td>
-                        <td><DefaultButton className={TableRow.styleClass.reset} text={'Nullstill'} onClick={() => this.reset()} /></td>
-                    </React.Fragment>
-                }
-            </tr>
+            <div className={'ulv__relative ulv__items-center item'}>
+                <div className={'ulv__flex ulv__w-full ulv__absolute ulv__h-full'}>
+                    <div className={'ulv__flex ulv__items-center ulv__justify-center ulv__flex-1'}>{task}</div>
+                    <div className={'ulv__flex ulv__items-center ulv__justify-center ulv__flex-1'}>{description}</div>
+                    <div className={'ulv__flex ulv__items-center ulv__justify-center ulv__flex-1'}>{convertToHHMMSS(time)}</div>
+                    <div className={'ulv__flex ulv__items-center ulv__justify-center ulv__flex ulv__flex-1'}>
+                        <div className={'ulv__mr-2'}><DefaultButton className={TableRow.styleClass.play(active)} text={active ? 'Start' : 'Pause'} onClick={() => this.play()} /></div>
+                        <div className={'ulv__mr-2'}><DefaultButton className={TableRow.styleClass.delete} text={'Slett'} onClick={() => this.delete()} /></div>
+                        <div className={''}><DefaultButton className={TableRow.styleClass.reset} text={'Nullstill'} onClick={() => this.reset()} /></div>
+                    </div>
+                </div>
+            </div>
         );
     }
 

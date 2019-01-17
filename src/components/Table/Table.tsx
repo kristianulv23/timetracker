@@ -40,7 +40,8 @@ class Table extends React.Component<ITableProps, ITableState> {
             'ulv__h-full'
         ),
         table: classNames(
-            ''
+            'ulv__flex',
+            'ulv__flex-col'
         ),
         button: classNames(
             'ulv__bg-green-tertiary',
@@ -61,27 +62,23 @@ class Table extends React.Component<ITableProps, ITableState> {
         return (
             <div className={Table.styleClass.root}>
                 {state.active ? <Modal onclick={() => this.hasChanged()} /> : null}
-                <table className={Table.styleClass.table}>
-                    <thead>
-                        <tr>
-                            <th>Jira oppgave</th>
-                            <th>Beskrivelse</th>
-                            <th>Tid brukt</th>
-                            <th></th>
-                            <th></th>
-                            <th>
-                                <DefaultButton className={Table.styleClass.button} text={"Ny oppgave"} onClick={() => updateModalState()} />
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <div className={Table.styleClass.table}>
+                    <div className={'ulv__flex ulv__bg-green-primary head'}>
+                        <div className={''}>Jira oppgave</div>
+                        <div className={''}>Beskrivelse</div>
+                        <div className={''}>Tid brukt</div>
+                        <div className={''}>
+                            <DefaultButton className={Table.styleClass.button} text={"Ny oppgave"} onClick={() => updateModalState()} />
+                        </div>
+                    </div>
+                    <div className={'ulv__flex ulv__flex-col row'}>
                         {
                             data.map((task) => {
-                                return <TableRow key={task.id} {...task} updateTable={this.getDataFromFirebase}/>
+                                return <TableRow key={task.id} {...task} updateTable={this.getDataFromFirebase} />
                             })
                         }
-                    </tbody>
-                </table>
+                    </div>
+                </div>
             </div>
         );
     }

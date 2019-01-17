@@ -1,96 +1,30 @@
-/* spacing */
-
-table {
-    table-layout: auto;
-    width: 100%;
-    border-collapse: collapse;
-    color: rgb(31, 31, 31);
-}
-
-thead th:nth-child(1), tbody tr td:nth-child(1) {
-  width: 25%;
-}
-
-thead th:nth-child(2), tbody tr td:nth-child(2) {
-  width: 25%;
-}
-
-thead th:nth-child(3), tbody tr td:nth-child(3) {
-  width: 30%;
-}
-
-thead th:nth-child(4), tbody tr td:nth-child(4) {
-  width: 10%;
-}
-
-thead th:nth-child(5), tbody tr td:nth-child(5) {
-  width: 10%;
-}
-
-th, td {
-  padding: 20px;
-}
-
-th {
-  letter-spacing: 2px;
-}
-
-td {
-  letter-spacing: 1px;
-}
-
-tbody td {
+.row > div, .head > div {
+  flex: 1;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  height: 5rem;
 }
 
-tr {
-  height: 4.5rem;
-}
-
-thead {
-  background-color: #0F434F;
+.head > div {
   color: white;
 }
 
-tbody tr:nth-child(odd) {
+.row .item > div{
+  //-webkit-transition-duration: 600ms;
+  //transition-duration: 600ms;
+}
+
+.row .item:nth-child(odd) > div {
   background-color: white;
+  //transform: translate(100%);
+  //-webkit-transform: translate(100%);
 }
 
-tbody tr:nth-child(even) {
+.row .item:nth-child(even) > div {
+  //transform: translate(-100%);
+  //-webkit-transform: translate(-100%);
   background-color: lightgrey;
-}
-
-.row {
-    -webkit-animation: fadeIn .5s forwards;
-	-moz-animation: fadeIn .5s forwards;
-    animation: fadeIn .5s forwards;
-}
-
-/* ANIMATE ROW */
-
-@-webkit-keyframes fadeIn {
-	0% {
-		margin-left: 0;
-	}
-	100% {
-		margin-left: -16rem;
-	}
-}
-
-@-moz-keyframes fadeIn {
-	0% {
-		margin-left: 0;
-	}
-	100% {
-		margin-left: -16rem;
-	}
-}
-
-@keyframes fadeIn {
-	0% {
-		margin-left: 0;
-	}
-	100% {
-		margin-left: -16rem;
-	}
 }
