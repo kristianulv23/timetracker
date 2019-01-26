@@ -1,7 +1,8 @@
 import * as React from "react";
 import { classNames, convertToHHMMSS } from "../../../utils/utils";
 import { DefaultButton } from '../shared/Button/DefaultButton/DefaultButton';
-import { updateTask, deleteTask } from '../../config/firebase/firebase';
+import database from '../../config/firebase/database/database';
+
 
 export interface ITableRowProps {
     id: string;
@@ -15,7 +16,7 @@ export interface ITableRowState {
     time: number;
     interval: any;
     paused: boolean;
-    active: boolean;
+    timerActive: boolean;
     isDeletingTask: boolean;
 }
 
@@ -27,7 +28,7 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
             time: 0,
             interval: null,
             paused: false,
-            active: true,
+            timerActive: false,
             isDeletingTask: false
         }
     }
@@ -37,7 +38,7 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
 
         ),
         play: (active) => classNames(
-            active ? 'ulv__bg-green hover__ulv__bg-green-dark' : 'ulv__bg-grey hover__ulv__bg-grey-dark',
+            !active ? 'ulv__bg-green hover__ulv__bg-green-dark' : 'ulv__bg-grey hover__ulv__bg-grey-dark',
             'ulv__w-24'
         ),
         delete: classNames(
@@ -58,8 +59,8 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
     }
 
     render() {
-        const { time, active } = this.state;
-        const { id, task, description } = this.props;
+        const { time, timerActive } = this.state;
+        const { task, description } = this.props;
         return (
             <div className={'ulv__relative ulv__items-center item'}>
                 <div className={'ulv__flex ulv__w-full ulv__absolute ulv__h-full'}>
@@ -67,7 +68,7 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
                     <div className={'ulv__flex ulv__items-center ulv__justify-center ulv__flex-1'}>{description}</div>
                     <div className={'ulv__flex ulv__items-center ulv__justify-center ulv__flex-1'}>{convertToHHMMSS(time)}</div>
                     <div className={'ulv__flex ulv__items-center ulv__justify-center ulv__flex ulv__flex-1'}>
-                        <div className={'ulv__mr-2'}><DefaultButton className={TableRow.styleClass.play(active)} text={active ? 'Start' : 'Pause'} onClick={() => this.play()} /></div>
+                        <div className={'ulv__mr-2'}><DefaultButton className={TableRow.styleClass.play(timerActive)} text={timerActive ? 'Pause' : 'Start'} onClick={() => this.play()} /></div>
                         <div className={'ulv__mr-2'}><DefaultButton className={TableRow.styleClass.delete} text={'Slett'} onClick={() => this.delete()} /></div>
                         <div className={''}><DefaultButton className={TableRow.styleClass.reset} text={'Nullstill'} onClick={() => this.reset()} /></div>
                     </div>
@@ -78,36 +79,34 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
 
     private play = () => {
         const { id } = this.props;
-        const { time, active, interval } = this.state;
+        const { time, timerActive, interval } = this.state;
         let seconds = time;
-        if (active) {
+        if (!timerActive) {
             let intervalId = setInterval(() => {
                 seconds++;
                 this.setState({
-                    time: seconds
+                    time: seconds,
+                    interval: intervalId,
+                    timerActive: !timerActive,
                 });
             }, 1000);
-            this.setState({
-                interval: intervalId,
-                active: !active,
-                time: seconds
-            });
         } else {
             this.setState({
-                active: !active
+                timerActive: !timerActive
             });
             clearInterval(interval);
         }
-        updateTask(id, seconds);
+        database().updateTask(id, seconds);
     }
 
     private reset = () => {
-        const { interval, active, time } = this.state;
+        const { interval, timerActive } = this.state;
         const { id } = this.props;
         this.setState({
             time: 0,
-            active: !active
-        }, updateTask(id, 0))
+            timerActive: timerActive ? !timerActive : null
+        });
+        database().updateTask(id, 0)
         clearInterval(interval);
     }
 
@@ -116,7 +115,8 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
         const { isDeletingTask } = this.state;
         this.setState({
             isDeletingTask: !isDeletingTask
-        }, deleteTask(id))
+        });
+        database().deleteTask(id)
         updateTable();
     }
 
@@ -124,7 +124,7 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
         const { time, isDeletingTask } = this.state;
         const { id } = this.props;
         if (time > 0 && !isDeletingTask) {
-            updateTask(id, time);
+            database().updateTask(id, time);
         }
     }
 }

@@ -1,8 +1,8 @@
 import * as React from "react";
-import { classNames } from "../../../utils/utils";
+import { classNames, snapshotToArray } from "../../../utils/utils";
 import TableRow from './TableRow';
 import { DefaultButton } from '../shared/Button/DefaultButton/DefaultButton';
-import { getTasks } from '../../config/firebase/firebase';
+import database from '../../config/firebase/database/database';
 import { IWithModalContext, withModalContext } from "../../context/withModalContext";
 import Modal from '../Modal/Modal';
 
@@ -56,14 +56,14 @@ class Table extends React.Component<ITableProps, ITableState> {
     render() {
 
         const { tasks } = this.state;
-        const { state } = this.props;
-        var data = this.snapshotToArray(tasks);
-        const { updateModalState } = this.props;
+        const { modalState, updateModalState } = this.props;
+        const data = snapshotToArray(tasks);
+
         return (
             <div className={Table.styleClass.root}>
-                {state.active ? <Modal onclick={() => this.hasChanged()} /> : null}
+                {modalState.active ? <Modal onClick={() => this.hasChanged()} /> : null}
                 <div className={Table.styleClass.table}>
-                    <div className={'ulv__flex ulv__bg-green-primary head'}>
+                    <div className={'ulv__flex ulv__bg-green-primary ulv__mt-17 head'}>
                         <div className={''}>Jira oppgave</div>
                         <div className={''}>Beskrivelse</div>
                         <div className={''}>Tid brukt</div>
@@ -84,30 +84,19 @@ class Table extends React.Component<ITableProps, ITableState> {
     }
 
     private hasChanged = () => {
+        console.log("testi");
         const { updateModalState } = this.props;
         this.getDataFromFirebase();
         updateModalState();
     }
 
     private getDataFromFirebase = () => {
-        getTasks().then((snapshot) => {
+        database().getTasks().then((snapshot) => {
             this.setState({
                 tasks: [snapshot.val()]
             })
         })
     }
-
-    private snapshotToArray = (snapshot: any) => {
-        let array = [];
-        snapshot.forEach(element => {
-            if (element) {
-                Object.keys(element).map((e) => {
-                    array.push(element[e])
-                })
-            }
-        });
-        return array;
-    };
 }
 
 export default withModalContext(Table);

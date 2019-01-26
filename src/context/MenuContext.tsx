@@ -6,14 +6,11 @@ export interface IMenuState {
 }
 
 export interface IMenuContext {
-    state: IMenuState;
+    menuState: IMenuState;
     toggleMenu: () => void;
 }
 
-const MenuContext = createContext<IMenuContext>({
-    state: { active: false },
-    toggleMenu: () => null
-});
+const MenuContext = createContext<IMenuContext>(null);
 
 export const MenuConsumer = MenuContext.Consumer;
 
@@ -37,7 +34,7 @@ class MenuContextProvider extends Component<any, IMenuState> {
     public render() {
         const { state } = this;
         const menuContext = {
-            state,
+            menuState: state,
             toggleMenu: this.toggleMenu
         };
 

@@ -3,10 +3,11 @@ import { classNames } from "../../../utils/utils";
 import { Input } from '../shared/Input/Input';
 import { DefaultButton } from '../shared/Button/DefaultButton/DefaultButton';
 import { IWithModalContext, withModalContext } from "../../context/withModalContext";
-import { addTask } from '../../config/firebase/firebase';
+import database from '../../config/firebase/database/database';
+
 
 export interface IModalProps extends IWithModalContext {
-    onclick: () => void;
+    onClick: () => void;
 }
 
 export interface IModalState {
@@ -73,10 +74,10 @@ class Modal extends React.Component<IModalProps, IModalState> {
     }
 
     private addTask = () => {
-        const { onclick } = this.props;
+        const { onClick } = this.props;
         const { task, description } = this.state;
-        addTask(task, 0, description);
-        onclick();
+        database().addTask(task, 0, description);
+        onClick();
     }
 }
 

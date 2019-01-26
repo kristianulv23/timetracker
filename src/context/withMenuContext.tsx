@@ -4,7 +4,7 @@ import { IMenuState, MenuConsumer, IMenuContext } from "./MenuContext";
 
 
 export interface IWithMenuContext {
-    state: IMenuState;
+    menuState: IMenuState;
     toggleMenu: () => void;
 }
 

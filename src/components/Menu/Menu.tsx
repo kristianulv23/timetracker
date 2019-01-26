@@ -28,7 +28,7 @@ class Menu extends React.Component<IMenuProps, {}> {
     static styleClass = {
         root: (active: boolean) => classNames(
             'ulv__fixed',
-            'ulv__z-10',
+            'ulv__z-20',
             'ulv__bg-green-primary',
             'ulv__h-full',
             'ulv__w-64',
@@ -42,10 +42,10 @@ class Menu extends React.Component<IMenuProps, {}> {
     }
 
     render() {
-        const { toggleMenu, state } = this.props;
+        const { toggleMenu, menuState } = this.props;
         return (
-            <div className={Menu.styleClass.root(state.active)}>
-                <HamburgerButton toggleMenu={toggleMenu} active={state.active} />
+            <div className={Menu.styleClass.root(menuState.active)}>
+                <HamburgerButton toggleMenu={toggleMenu} active={menuState.active} />
                 <div className={Menu.styleClass.list_wrapper} style={{ top: '8rem' }}>
                     {listItems.map((item, index) => {
                         return <MenuList key={index} {...item} />
@@ -53,10 +53,6 @@ class Menu extends React.Component<IMenuProps, {}> {
                 </div>
             </div>
         );
-    }
-
-    componentDidMount() {
-        
     }
 }
 

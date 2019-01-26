@@ -25,7 +25,7 @@ export function classNames(...args) {
 }
 
 export function convertToHHMMSS(time) {
-    if(time === 0) return '00:00:00';
+    if (time === 0) return '00:00:00';
     var h = Math.floor(time / 3600);
     var m = Math.floor(time % 3600 / 60);
     var s = Math.floor(time % 3600 % 60);
@@ -35,3 +35,15 @@ export function convertToHHMMSS(time) {
     var sDisplay = s > 9 ? s : `0${s}`;
     return `${hDisplay}:${mDisplay}:${sDisplay}`;
 }
+
+export function snapshotToArray(snapshot) {
+    let array = [];
+    snapshot.forEach(element => {
+        if (element) {
+            Object.keys(element).map((e) => {
+                array.push(element[e])
+            })
+        }
+    });
+    return array;
+};

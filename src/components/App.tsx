@@ -1,22 +1,22 @@
 import * as React from "react";
+import Routers from '../router/router';
 import { classNames } from "../../utils/utils";
 import Body from "../components/Body/Body";
 import MenuContextProvider from '../context/MenuContext';
 import ModalContextProvider from '../context/ModalContext';
-import { Route } from 'react-router-dom';
-import Home from '../components/Home/Home';
-import Table from '../components/Table/Table';
-import Modal from '../components/Modal/Modal';
+import AuthContextProvider from '../context/AuthContext';
+import Header from '../components/Header/Header';
+import Menu from '../components/Menu/Menu';
+
 import { init as firebaseInit } from '../config/firebase/firebase';
 
-export interface IAppProps {
-
-}
-
-export class App extends React.Component<IAppProps, {}> {
+export class App extends React.Component<{}, {}> {
 
     constructor(props) {
         super(props);
+        this.state = {
+            authenticated: false
+        }
         firebaseInit();
     }
 
@@ -30,15 +30,17 @@ export class App extends React.Component<IAppProps, {}> {
     render() {
         return (
             <div className={App.styleClass.root}>
-                <MenuContextProvider>
-                    <ModalContextProvider>
-                        <Body>
-                            <Route path="/" component={Home} />
-                            <Route path="/oppgaver" component={Table} />
-                            <Route path="/create" component={Modal} />
-                        </Body>
-                    </ModalContextProvider>
-                </MenuContextProvider>
+                <AuthContextProvider>
+                    <MenuContextProvider>
+                        <ModalContextProvider>
+                            <Menu />
+                            <Header />
+                            <Body>
+                                <Routers />
+                            </Body>
+                        </ModalContextProvider>
+                    </MenuContextProvider>
+                </AuthContextProvider>
             </div>
         );
     }

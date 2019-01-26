@@ -1,6 +1,5 @@
 import * as React from "react";
 import { classNames } from "../../../utils/utils";
-import Menu from "../Menu/Menu";
 
 export interface IBodyProps {
 
@@ -25,7 +24,6 @@ export default class Body extends React.Component<IBodyProps, {}> {
         const { children } = this.props;
         return (
             <div className={styles.root}>
-                <Menu />
                 <div className={'ulv__w-full ulv__h-full'}>
                     {children}
                 </div>

@@ -1,5 +1,4 @@
-import * as firebase from 'firebase';
-import taskModel from './models/task';
+import firebase from 'firebase';
 
 let database;
 
@@ -21,28 +20,7 @@ export const init = () => {
     }
 }
 
-export const getTasks = () => {
-    return database.ref('tasks').once('value');
-}
-
-export const addTask = (task, time, description) => {
-    let id = database.ref('tasks').push().key;
-    let model = taskModel(id, task, time, description, firebase.database.ServerValue.TIMESTAMP);
-    return database.ref('tasks/' + id).set(model);
-}
-
-export const updateTask = (taskId, time) => {
-    database.ref(`tasks/${taskId}`).update({
-        time: time
-    }, function (error) {
-        if (error) {
-            console.log('Writing to database failed: ', error);
-        } else {
-            console.log('Data saved successfully!');
-        }
-    });
-}
-
-export const deleteTask = (taskId) => {
-    database.ref(`tasks/${taskId}`).remove();
+export const getDatabase = () => {
+    if(database) return database;
+    return "Cant find firebase";
 }

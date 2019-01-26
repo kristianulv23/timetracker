@@ -6,14 +6,11 @@ export interface IModalState {
 }
 
 export interface IModalContext {
-    state: IModalState;
+    modalState: IModalState;
     updateModalState: () => void;
 }
 
-const ModalContext = createContext<IModalContext>({
-    state: { active: false },
-    updateModalState: () => null
-});
+const ModalContext = createContext<IModalContext>(null);
 
 export const ModalConsumer = ModalContext.Consumer;
 
@@ -37,7 +34,7 @@ class ModalContextProvider extends Component<any, IModalState> {
     public render() {
         const { state } = this;
         const modalContext = {
-            state,
+            modalState: state,
             updateModalState: this.updateModalState
         };
 

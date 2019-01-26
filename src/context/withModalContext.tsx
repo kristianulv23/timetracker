@@ -4,7 +4,7 @@ import { IModalState, ModalConsumer, IModalContext } from "./ModalContext";
 
 
 export interface IWithModalContext {
-    state: IModalState;
+    modalState: IModalState;
     updateModalState: () => void;
 }
 
