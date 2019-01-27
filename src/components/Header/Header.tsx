@@ -2,6 +2,7 @@ import * as React from "react";
 import { classNames } from "../../../utils/utils";
 import { Link } from "react-router-dom";
 import { signOutFirebaseUser } from "../../config/firebase/auth/authentication";
+import { DefaultButton } from "../shared/Button/DefaultButton/DefaultButton";
 import {
   IWithAuthContext,
   withAuthContext
@@ -31,12 +32,18 @@ class Header extends React.Component<IHeaderProps, {}> {
       "ulv__h-18",
       "ulv__bg-green-primary"
     ),
+    button: classNames(
+      "ulv__bg-green-tertiary",
+      "ulv__w-48",
+      "hover__ulv__bg-green-secondary"
+    ),
     link: classNames("ulv__text-white", "ulv__no-underline"),
     linkWrapper: classNames("ulv__flex", "ulv__items-center", "ulv__mr-8")
   };
 
   render() {
     const { authState } = this.props;
+    console.log(authState);
     return (
       <nav className={Header.styleClass.nav}>
         {authState.authUser ? (
@@ -44,8 +51,14 @@ class Header extends React.Component<IHeaderProps, {}> {
             className={Header.styleClass.linkWrapper}
             onClick={() => signOutFirebaseUser()}
           >
+            <span className={"ulv__text-white ulv__mr-4"}>
+              Logget inn som {authState.authUser.email}
+            </span>
             <Link className={Header.styleClass.link} to="/">
-              Logout
+              <DefaultButton
+                text={"Logg ut"}
+                className={Header.styleClass.button}
+              />
             </Link>
           </div>
         ) : null}

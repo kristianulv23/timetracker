@@ -60,17 +60,17 @@ class Login extends React.Component<ILoginProps, ILoginState> {
         >
           <Input
             className={Login.styleClass.input}
-            placeholder={"Email"}
+            placeholder={"Epost"}
             onChange={e => this.setState({ email: e.target.value })}
           />
           <Input
             className={Login.styleClass.input}
-            placeholder={"Password"}
+            placeholder={"Passord"}
             type={"password"}
             onChange={e => this.setState({ password: e.target.value })}
           />
           <DefaultButton
-            text={"Login"}
+            text={"Logg inn"}
             className={Login.styleClass.button}
             type="submit"
           />
