@@ -51,10 +51,14 @@ module.exports = {
         test: /\.(png|jpg|gif|svg)$/,
         use: [
           {
-            loader: 'file-loader',
-            options: {},
-          },
-        ],
+            loader: "file-loader",
+            options: {}
+          }
+        ]
+      },
+      {
+        test: /\.svg$/,
+        loader: "svg-inline-loader"
       },
 
       // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.

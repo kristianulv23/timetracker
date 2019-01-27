@@ -34,7 +34,8 @@ class Login extends React.Component<ILoginProps, ILoginState> {
       "ulv__bg-green-primary",
       "ulv__min-w-md",
       "ulv__max-w-xs",
-      "ulv__max-h-sm"
+      "ulv__max-h-sm",
+      "login"
     ),
     form: classNames("ulv__flex", "ulv__flex-col", "ulv__p-16"),
     button: classNames("ulv__bg-green-tertiary", "ulv__w-48", "hover__ulv__bg-green-secondary"),

@@ -99,7 +99,8 @@ class Table extends React.Component<ITableProps, ITableState> {
   private getDataFromFirebase = () => {
     const {updateLoaderState} = this.props;
     updateLoaderState();
-    database()
+    setTimeout(() => {
+      database()
       .getTasks()
       .then(snapshot => {
         this.setState({
@@ -107,6 +108,8 @@ class Table extends React.Component<ITableProps, ITableState> {
         });
         updateLoaderState();
       });
+    }, 5000);
+    
   };
 }
 

@@ -41,7 +41,8 @@ class Modal extends React.Component<IModalProps, IModalState> {
             'ulv__max-w-xs',
             'ulv__min-h-sm',
             'ulv__m-auto',
-            'ulv__z-50'
+            'ulv__z-50',
+            'modal'
         ),
         form: classNames(
             'ulv__flex',

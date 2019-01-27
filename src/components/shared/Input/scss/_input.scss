@@ -2,4 +2,9 @@ input {
     padding: 10px;
     background: white;
     margin: 0 0 10px 0;
+    text-decoration: none;
+    &:focus-within {
+        text-decoration: none;
+        
+    }
 }

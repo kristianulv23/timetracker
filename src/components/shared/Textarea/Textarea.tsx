@@ -4,6 +4,7 @@ import { classNames } from "../../../../utils/utils";
 export interface ITextareaProps extends React.TextareaHTMLAttributes<HTMLInputElement> {
     label?: string;
     className?: string;
+    placeholder?: string;
 }
 
 export interface ITextareaState {
@@ -49,7 +50,7 @@ export class Textarea extends React.PureComponent<ITextareaProps, ITextareaState
     };
 
     render() {
-        const {  className } = this.props;
+        const {  className, placeholder } = this.props;
         const { value } = this.state;
         return (
             <textarea
@@ -57,6 +58,8 @@ export class Textarea extends React.PureComponent<ITextareaProps, ITextareaState
                 className={Textarea.styleClass.root(className)}
                 onChange={this.onChange}
                 maxLength={100}
+                placeholder={placeholder}
+                rows={10}
             />
         );
     }
