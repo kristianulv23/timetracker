@@ -6,6 +6,7 @@ import { IModalState, ModalConsumer, IModalContext } from "./ModalContext";
 export interface IWithModalContext {
     modalState: IModalState;
     updateModalState: () => void;
+    toggleModal: () => void;
 }
 
 export const withModalContext = <P extends IWithModalContext>(Component: React.ComponentType<P>) =>

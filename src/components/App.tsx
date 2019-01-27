@@ -1,13 +1,13 @@
 import * as React from "react";
-import Routers from '../router/router';
+import Routers from '../router/Route';
 import { classNames } from "../../utils/utils";
 import Body from "../components/Body/Body";
 import MenuContextProvider from '../context/MenuContext';
 import ModalContextProvider from '../context/ModalContext';
 import AuthContextProvider from '../context/AuthContext';
+import LoaderContextProvider from '../context/LoaderContext';
 import Header from '../components/Header/Header';
 import Menu from '../components/Menu/Menu';
-
 import { init as firebaseInit } from '../config/firebase/firebase';
 
 export class App extends React.Component<{}, {}> {
@@ -31,6 +31,7 @@ export class App extends React.Component<{}, {}> {
         return (
             <div className={App.styleClass.root}>
                 <AuthContextProvider>
+                    <LoaderContextProvider>
                     <MenuContextProvider>
                         <ModalContextProvider>
                             <Menu />
@@ -40,6 +41,7 @@ export class App extends React.Component<{}, {}> {
                             </Body>
                         </ModalContextProvider>
                     </MenuContextProvider>
+                    </LoaderContextProvider>
                 </AuthContextProvider>
             </div>
         );

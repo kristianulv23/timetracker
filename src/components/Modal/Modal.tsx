@@ -1,13 +1,14 @@
 import * as React from "react";
 import { classNames } from "../../../utils/utils";
 import { Input } from '../shared/Input/Input';
+import { Textarea } from '../shared/Textarea/Textarea';
 import { DefaultButton } from '../shared/Button/DefaultButton/DefaultButton';
 import { IWithModalContext, withModalContext } from "../../context/withModalContext";
 import database from '../../config/firebase/database/database';
 
 
 export interface IModalProps extends IWithModalContext {
-    onClick: () => void;
+    toggleModal: () => void;
 }
 
 export interface IModalState {
@@ -37,7 +38,7 @@ class Modal extends React.Component<IModalProps, IModalState> {
         modal: classNames(
             'ulv__bg-green-primary',
             'ulv__min-w-md',
-            'ulv__max-w-lg',
+            'ulv__max-w-xs',
             'ulv__min-h-sm',
             'ulv__m-auto',
             'ulv__z-50'
@@ -49,7 +50,8 @@ class Modal extends React.Component<IModalProps, IModalState> {
         ),
         button: classNames(
             'ulv__bg-green-tertiary',
-            'ulv__w-48'
+            'ulv__w-full',
+            'hover__ulv__bg-green-secondary'
         ),
         input: classNames(
             'ulv__mb-4'
@@ -57,15 +59,13 @@ class Modal extends React.Component<IModalProps, IModalState> {
     }
 
     render() {
-
         const { updateModalState } = this.props;
-
         return (
             <div className={Modal.styleClass.backdrop} style={{ backgroundColor: 'rgba(0,0,0,0.3)' }} onClick={() => updateModalState()}>
                 <div className={Modal.styleClass.modal} onClick={(e) => e.stopPropagation()}>
                     <div className={Modal.styleClass.form}>
-                        <Input className={Modal.styleClass.input} placeholder={'Oppgave'} onChange={(e) => this.setState({ task: e.target.value })} />
-                        <Input className={Modal.styleClass.input} placeholder={'Beskrivelse'} onChange={(e) => this.setState({ description: e.target.value })} />
+                        <Input className={Modal.styleClass.input} placeholder={'Oppgave'} onChange={(e) => this.setState({ task: e.target.value })} value={'SNOAM-'} autoFocus/>
+                        <Textarea className={Modal.styleClass.input} placeholder={'Beskrivelse'} onChange={(e) => this.setState({ description: e.target.value })} />
                         <DefaultButton text={'Opprett oppgave'} className={Modal.styleClass.button} onClick={() => this.addTask()} />
                     </div>
                 </div>
@@ -74,10 +74,10 @@ class Modal extends React.Component<IModalProps, IModalState> {
     }
 
     private addTask = () => {
-        const { onClick } = this.props;
+        const { toggleModal } = this.props;
         const { task, description } = this.state;
         database().addTask(task, 0, description);
-        onClick();
+        toggleModal();
     }
 }
 

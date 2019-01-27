@@ -1,8 +1,10 @@
-export function classNames(...args) {
+import { ITasks } from "../src/components/Table/Table";
+
+export function classNames(...args: string[]) {
     const classes = [];
 
     for (let i = 0; i < args.length; i++) {
-        const arg = args[i];
+        const arg: any = args[i];
         if (!arg) {
             continue;
         }
@@ -15,7 +17,7 @@ export function classNames(...args) {
             classes.push(classNames.apply(this, arg));
         } else if (argType === 'object') {
             for (const key in arg) {
-                if (hasOwn.call(arg, key) && arg[key]) {
+                if (arg.hasOwn.call(arg, key) && arg[key]) {
                     classes.push((this && this[key]) || key);
                 }
             }
@@ -24,7 +26,7 @@ export function classNames(...args) {
     return classes.join(' ');
 }
 
-export function convertToHHMMSS(time) {
+export function convertToHHMMSS(time: number) {
     if (time === 0) return '00:00:00';
     var h = Math.floor(time / 3600);
     var m = Math.floor(time % 3600 / 60);
@@ -36,7 +38,7 @@ export function convertToHHMMSS(time) {
     return `${hDisplay}:${mDisplay}:${sDisplay}`;
 }
 
-export function snapshotToArray(snapshot) {
+export function snapshotToArray(snapshot: ITasks[]) {
     let array = [];
     snapshot.forEach(element => {
         if (element) {

@@ -2,22 +2,14 @@ import * as React from "react";
 import { Input } from "../shared/Input/Input";
 import { classNames } from "../../../utils/utils";
 import { DefaultButton } from "../shared/Button/DefaultButton/DefaultButton";
-import { signInFirebaseUser } from "../../config/firebase/auth/authentication";
-import {
-  IWithLoaderContext,
-  withLoaderContext
-} from "../../context/withLoaderContext";
+import { createFirebaseUser } from "../../config/firebase/auth/authentication";
 
-interface ILoginProps extends IWithLoaderContext {
-
-}
-
-interface ILoginState {
+interface ISignupState {
   email: string;
   password: string;
 }
 
-class Login extends React.Component<ILoginProps, ILoginState> {
+class Signup extends React.Component<{}, ISignupState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -33,45 +25,42 @@ class Login extends React.Component<ILoginProps, ILoginState> {
       "ulv__m-auto",
       "ulv__bg-green-primary",
       "ulv__min-w-md",
-      "ulv__max-w-xs",
-      "ulv__max-h-sm"
+      "ulv__max-w-lg",
+      "ulv__max-h-sm",
+      "ulv__z-50"
     ),
     form: classNames("ulv__flex", "ulv__flex-col", "ulv__p-16"),
-    button: classNames("ulv__bg-green-tertiary", "ulv__w-48", "hover__ulv__bg-green-secondary"),
+    button: classNames("ulv__bg-green-tertiary", "ulv__w-48"),
     input: classNames("ulv__mb-4")
   };
 
-  authWithEmailPassword(event) {
-    event.preventDefault();
-    const {updateLoaderState} = this.props;
+  createUserWithEmailAndPassword(event) {
     const { email, password } = this.state;
-    updateLoaderState();
-    signInFirebaseUser(email, password).then(() => {
-      updateLoaderState();
-    });
+    event.preventDefault();
+    createFirebaseUser(email, password);
   }
 
   render() {
     return (
-      <div className={Login.styleClass.formWrapper}>
+      <div className={Signup.styleClass.formWrapper}>
         <form
-          className={Login.styleClass.form}
-          onSubmit={e => this.authWithEmailPassword(e)}
+          className={Signup.styleClass.form}
+          onSubmit={e => this.createUserWithEmailAndPassword(e)}
         >
           <Input
-            className={Login.styleClass.input}
+            className={Signup.styleClass.input}
             placeholder={"Email"}
             onChange={e => this.setState({ email: e.target.value })}
           />
           <Input
-            className={Login.styleClass.input}
+            className={Signup.styleClass.input}
             placeholder={"Password"}
             type={"password"}
             onChange={e => this.setState({ password: e.target.value })}
           />
           <DefaultButton
-            text={"Login"}
-            className={Login.styleClass.button}
+            text={"Registrer Bruker"}
+            className={Signup.styleClass.button}
             type="submit"
           />
         </form>
@@ -80,4 +69,4 @@ class Login extends React.Component<ILoginProps, ILoginState> {
   }
 }
 
-export default withLoaderContext(Login);
+export default Signup;
