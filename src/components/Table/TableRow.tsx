@@ -1,8 +1,8 @@
-import * as React from "react";
-import { classNames, convertToHHMMSS } from "../../../utils/utils";
-import { DefaultButton } from "../shared/Button/DefaultButton/DefaultButton";
-import database from "../../config/firebase/database/database";
-import TableCell from "../Table/TableCell";
+import * as React from 'react';
+import { classNames, convertToHHMMSS } from '../../../utils/utils';
+import { DefaultButton } from '../shared/Button/DefaultButton/DefaultButton';
+import database from '../../config/firebase/database/database';
+import TableCell from '../Table/TableCell';
 
 export interface ITableRowProps {
   id: string;
@@ -38,19 +38,19 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
     toggleTimer: active =>
       classNames(
         !active
-          ? "ulv__bg-green hover__ulv__bg-green-dark"
-          : "ulv__bg-grey hover__ulv__bg-grey-dark",
-        "ulv__min-w-24"
+          ? 'ulv__bg-green hover__ulv__bg-green-dark'
+          : 'ulv__bg-grey hover__ulv__bg-grey-dark',
+        'ulv__min-w-24'
       ),
     delete: classNames(
-      "ulv__bg-red-dark",
-      "hover__ulv__bg-red-darker",
-      "ulv__min-w-24"
+      'ulv__bg-red-dark',
+      'hover__ulv__bg-red-darker',
+      'ulv__min-w-24'
     ),
     reset: classNames(
-      "ulv__bg-grey-dark",
-      "hover__ulv__bg-grey-darker",
-      "ulv__min-w-24"
+      'ulv__bg-grey-dark',
+      'hover__ulv__bg-grey-darker',
+      'ulv__min-w-24'
     )
   };
 
@@ -65,30 +65,30 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
     const { time, timerActive } = this.state;
     const { task, description } = this.props;
     return (
-      <div className={"ulv__relative ulv__items-center item"}>
-        <div className={"ulv__flex ulv__w-full ulv__absolute ulv__h-full"}>
-          <TableCell>{task}</TableCell>
-          <TableCell>{description}</TableCell>
-          <TableCell>{convertToHHMMSS(time)}</TableCell>
-          <TableCell>
-            <div className={"ulv__mr-2"}>
+      <div className={'ulv__relative ulv__items-center ulv__mb-px item'}>
+        <div className={'ulv__flex ulv__w-full ulv__absolute ulv__h-full'}>
+          <TableCell className={'ulv__justify-center'}>{task}</TableCell>
+          <TableCell className={'ulv__justify-center'}>{description}</TableCell>
+          <TableCell className={'ulv__justify-center'}>{convertToHHMMSS(time)}<span className={timerActive ? 'timer' : ''} /></TableCell>
+          <TableCell className={classNames('ulv__justify-end ulv__mr-8')}>
+            <div className={'ulv__mr-2'}>
               <DefaultButton
                 className={TableRow.styleClass.toggleTimer(timerActive)}
-                text={timerActive ? "Pause" : "Start"}
+                text={timerActive ? 'Pause' : 'Start'}
                 onClick={() => this.toggleTimer()}
               />
             </div>
-            <div className={"ulv__mr-2"}>
+            <div className={'ulv__mr-2'}>
               <DefaultButton
                 className={TableRow.styleClass.delete}
-                text={"Slett"}
+                text={'Slett'}
                 onClick={() => this.delete()}
               />
             </div>
-            <div className={""}>
+            <div className={''}>
               <DefaultButton
                 className={TableRow.styleClass.reset}
-                text={"Nullstill"}
+                text={'Nullstill'}
                 onClick={() => this.reset()}
               />
             </div>

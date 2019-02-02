@@ -1,21 +1,22 @@
-import * as React from "react";
-import { classNames, snapshotToArray } from "../../../utils/utils";
-import TableRow from "./TableRow";
-import { DefaultButton } from "../shared/Button/DefaultButton/DefaultButton";
-import database from "../../config/firebase/database/database";
+import * as React from 'react';
+import { classNames, snapshotToArray } from '../../../utils/utils';
+import TableRow from './TableRow';
+import { DefaultButton } from '../shared/Button/DefaultButton/DefaultButton';
+import database from '../../config/firebase/database/database';
 import {
   IWithModalContext,
   withModalContext
-} from "../../context/withModalContext";
+} from '../../context/withModalContext';
 import {
   IWithLoaderContext,
   withLoaderContext
-} from "../../context/withLoaderContext";
-import Modal from "../Modal/Modal";
+} from '../../context/withLoaderContext';
+import Modal from '../Modal/Modal';
 import {
   IWithAuthContext,
   withAuthContext
-} from "../../context/withAuthContext";
+} from '../../context/withAuthContext';
+import TableCell from '../Table/TableCell';
 
 export interface ITableProps extends IWithModalContext, IWithLoaderContext, IWithAuthContext { }
 
@@ -40,15 +41,16 @@ class Table extends React.Component<ITableProps, ITableState> {
 
   static styleClass = {
     root: classNames(
-      "ulv__absolute",
-      "ulv__pin-t",
-      "ulv__pin-r",
-      "ulv__bg-green-tertiary",
-      "ulv__w-full",
-      "ulv__h-full"
+      'ulv__absolute',
+      'ulv__pin-t',
+      'ulv__pin-r',
+      'ulv__bg-green-secondary',
+      'ulv__w-full',
+      'ulv__h-auto'
     ),
-    table: classNames("ulv__flex", "ulv__flex-col"),
-    button: classNames("ulv__bg-green-tertiary", "ulv__w-32", "hover__ulv__bg-green-secondary")
+    table: classNames('ulv__flex', 'ulv__flex-col', 'ulv__p-8'),
+    tableHead: classNames('ulv__flex', 'ulv__bg-green-primary', 'ulv__mt-17', 'ulv__text-lg', 'head'),
+    button: classNames('ulv__bg-green-tertiary', 'ulv__w-32', 'hover__ulv__bg-green-secondary')
   };
 
   render() {
@@ -62,19 +64,15 @@ class Table extends React.Component<ITableProps, ITableState> {
           <Modal getDataFromFirebase={() => this.getDataFromFirebase()} uid={authState.authUser.uid} />
         ) : null}
         <div className={Table.styleClass.table}>
-          <div className={"ulv__flex ulv__bg-green-primary ulv__mt-17 head"}>
-            <div>Jira oppgave</div>
-            <div>Beskrivelse</div>
-            <div>Tid brukt</div>
-            <div>
-              <DefaultButton
-                className={Table.styleClass.button}
-                text={"Ny oppgave"}
-                onClick={() => updateModalState()}
-              />
-            </div>
+          <div className={Table.styleClass.tableHead}>
+            <TableCell className={'ulv__justify-center'}>Jira oppgave</TableCell>
+            <TableCell className={'ulv__justify-center'}>Beskrivelse</TableCell>
+            <TableCell className={'ulv__justify-center'}>Tid brukt</TableCell>
+            <TableCell className={classNames('ulv__justify-end ulv__mr-8')}>
+              <DefaultButton className={Table.styleClass.button} text={'Ny oppgave'} onClick={() => updateModalState()} />
+            </TableCell>
           </div>
-          <div className={"ulv__flex ulv__flex-col row"}>
+          <div className={'ulv__flex ulv__flex-col ulv__shadow-lg row'}>
             {data.map(task => {
               return (
                 <TableRow

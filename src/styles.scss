@@ -3,6 +3,10 @@
 @tailwind utilities;
 @import 'components/manifest';
 
+html, body {
+    font-family: 'Karla', sans-serif;
+}
+
 a {
     text-decoration: none;
 }

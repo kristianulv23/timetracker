@@ -33,12 +33,11 @@ class Modal extends React.Component<IModalProps, IModalState> {
             'ulv__items-center',
             'ulv__fixed',
             'ulv__pin',
-            'ulv__p-10',
             'ulv__z-40'
         ),
         modal: classNames(
             'ulv__bg-green-primary',
-            'ulv__min-w-md',
+            'ulv__min-w-98',
             'ulv__max-w-xs',
             'ulv__min-h-sm',
             'ulv__m-auto',

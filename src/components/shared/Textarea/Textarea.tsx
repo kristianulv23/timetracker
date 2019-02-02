@@ -17,6 +17,7 @@ export class Textarea extends React.PureComponent<ITextareaProps, ITextareaState
 
         root: (className?: string) => classNames(
             'ulv__tracking-wide',
+            'ulv__p-2',
             className
         )
     };

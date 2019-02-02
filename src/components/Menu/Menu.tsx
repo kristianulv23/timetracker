@@ -1,6 +1,6 @@
 import * as React from "react";
 import { classNames } from "../../../utils/utils";
-import { MenuList } from "./MenuList";
+import MenuList from "./MenuList";
 import { HamburgerButton } from '../shared/Button/HamburgerButton/HamburgerButton';
 import { IWithMenuContext, withMenuContext } from "../../context/withMenuContext";
 
@@ -31,11 +31,11 @@ class Menu extends React.Component<IMenuProps, {}> {
             'ulv__z-20',
             'ulv__bg-green-primary',
             'ulv__h-full',
-            'ulv__w-64',
-            'ulv__ml-64',
+            'ulv__w-full',
+            'md__ulv__w-64',
             active ? 'openMenu' : 'closeMenu'
         ),
-        list_wrapper: classNames(
+        listWrapper: classNames(
             'ulv__absolute',
             'ulv__w-full'
         ),
@@ -46,7 +46,7 @@ class Menu extends React.Component<IMenuProps, {}> {
         return (
             <div className={Menu.styleClass.root(menuState.active)}>
                 <HamburgerButton toggleMenu={toggleMenu} active={menuState.active} />
-                <div className={Menu.styleClass.list_wrapper} style={{ top: '8rem' }}>
+                <div className={Menu.styleClass.listWrapper} style={{ top: '8rem' }}>
                     {listItems.map((item, index) => {
                         return <MenuList key={index} {...item} />
                     })}

@@ -3,8 +3,11 @@
     left: 0;
     width: 4.5em;
     height: 4.5em;
-    background-color: #0F434F;
     cursor: pointer;
+
+	&:hover {
+		background-color: #2b5968;
+	}
 
 	.hamburger-menu {
 		position: relative;
@@ -83,7 +86,7 @@
 		left: 0;
 	}
 	100% {
-		left: 16rem;
+		left: 100%;
 	}
 }
 
@@ -92,7 +95,7 @@
 		left: 0;
 	}
 	100% {
-		left: 16rem;
+		left: 100%;
 	}
 }
 
@@ -101,13 +104,13 @@
 		left: 0;
 	}
 	100% {
-		left: 16rem;
+		left: 100%;
 	}
 }
 
 @-webkit-keyframes fadeOut {
 	0% {
-		left: 16rem;
+		left: 100%;
 	}
 	100% {
 		left: 0;
@@ -116,7 +119,7 @@
 
 @-moz-keyframes fadeOut {
 	0% {
-		left: 16rem;
+		left: 100%;
 	}
 	100% {
 		left: 0;
@@ -125,7 +128,7 @@
 
 @keyframes fadeOut {
 	0% {
-		left: 16rem;
+		left: 100%;
 	}
 	100% {
 		left: 0;

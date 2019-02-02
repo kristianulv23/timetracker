@@ -30,8 +30,8 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
         "ulv__relative",
         "ulv__w-20",
         "ulv__cursor-pointer",
-        "hover__ulv__bg-green-secondary",
-        hidden ? "" : "ulv__bg-green-secondary"
+        "hover__ulv__bg-green-secondary-1",
+        hidden ? "" : "ulv__bg-green-secondary-1"
       )
   };
 
@@ -45,7 +45,6 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
   render() {
     const { hidden } = this.state;
     const { profile } = this.props;
-    console.log(profile);
     return (
       <div
         className={Profile.styleClass.profile(hidden)}
@@ -55,7 +54,7 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
         {hidden ? null : (
           <div
             className={
-              "ulv__absolute ulv__w-80 ulv__h-48 ulv__bg-green-secondary"
+              "ulv__absolute ulv__w-80 ulv__h-48 ulv__bg-green-secondary-1"
             }
             style={{ top: "4.5rem", left: '-15rem' }}
           >

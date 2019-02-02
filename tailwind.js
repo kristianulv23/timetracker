@@ -132,8 +132,9 @@ let colors = {
   // Custom
   'green-primary': '#0F434F',
   'green-secondary': '#447884',
+  'green-secondary-1': '#2b5968',
   'green-tertiary': '#689D99',
-  'green-tertiary-2': '#55AA55',
+  'green-tertiary-2': '#d5e5e8',
   'blue-primary': '#0C88FF'
 }
 
@@ -575,6 +576,8 @@ module.exports = {
   minWidth: {
     '0': '0',
     '24': '6rem',
+    '48': '12rem',
+    '98': '25rem',
     'full': '100%',
   },
 

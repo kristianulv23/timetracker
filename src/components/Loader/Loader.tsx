@@ -16,7 +16,6 @@ class Loader extends React.Component<IModalProps, IModalState> {
       "ulv__items-center",
       "ulv__fixed",
       "ulv__pin",
-      "ulv__p-10",
       "ulv__z-40"
     )
   };
