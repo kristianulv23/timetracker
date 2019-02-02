@@ -2,7 +2,7 @@ import * as React from "react";
 import * as firebase from "firebase";
 import { withRouter } from "react-router-dom";
 import { History } from "history";
-import { RouteEnum } from "../router/RouteEnums";
+import { RouteEnum } from "../routes/RouteEnums";
 
 import { Component, createContext } from "react";
 

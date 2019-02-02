@@ -7,8 +7,8 @@ export interface IWithAuthContext {
     authState: IAuthState;
 }
 
-export const withAuthContext = <P extends IWithAuthContext>(Component: React.ComponentType<P>) =>
-    class WithAuthContext extends React.PureComponent<Subtract<P, IWithAuthContext>> {
+export const withAuthContext = <P extends IWithAuthContext>(Component: React.ComponentType<any>) =>
+    class WithAuthContext extends React.PureComponent<Subtract<any, IWithAuthContext>> {
         public render() {
             return (
                 <AuthConsumer>

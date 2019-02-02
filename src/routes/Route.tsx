@@ -5,8 +5,8 @@ import Home from "../components/Home/Home";
 import Table from "../components/Table/Table";
 import Modal from "../components/Modal/Modal";
 import Login from "../components/Login/Login";
-import PrivateRoute from "../router/PrivateRoute";
-import { RouteEnum } from "../router/RouteEnums";
+import PrivateRoute from "../routes/PrivateRoute";
+import { RouteEnum } from "../routes/RouteEnums";
 
 interface IRoutersProps extends IWithAuthContext {}
 

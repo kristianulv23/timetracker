@@ -12,8 +12,12 @@ import {
   withLoaderContext
 } from "../../context/withLoaderContext";
 import Modal from "../Modal/Modal";
+import {
+  IWithAuthContext,
+  withAuthContext
+} from "../../context/withAuthContext";
 
-export interface ITableProps extends IWithModalContext, IWithLoaderContext {}
+export interface ITableProps extends IWithModalContext, IWithLoaderContext, IWithAuthContext { }
 
 export interface ITableState {
   tasks: ITasks[];
@@ -47,26 +51,22 @@ class Table extends React.Component<ITableProps, ITableState> {
     button: classNames("ulv__bg-green-tertiary", "ulv__w-32", "hover__ulv__bg-green-secondary")
   };
 
-  componentWillMount() {
-    this.getDataFromFirebase();
-  }
-
   render() {
     const { tasks } = this.state;
-    const { modalState, updateModalState } = this.props;
+    const { modalState, updateModalState, authState } = this.props;
     const data = snapshotToArray(tasks);
 
     return (
       <div className={Table.styleClass.root}>
         {modalState.active ? (
-          <Modal toggleModal={() => this.hasChanged()} />
+          <Modal getDataFromFirebase={() => this.getDataFromFirebase()} uid={authState.authUser.uid} />
         ) : null}
         <div className={Table.styleClass.table}>
           <div className={"ulv__flex ulv__bg-green-primary ulv__mt-17 head"}>
-            <div className={""}>Jira oppgave</div>
-            <div className={""}>Beskrivelse</div>
-            <div className={""}>Tid brukt</div>
-            <div className={""}>
+            <div>Jira oppgave</div>
+            <div>Beskrivelse</div>
+            <div>Tid brukt</div>
+            <div>
               <DefaultButton
                 className={Table.styleClass.button}
                 text={"Ny oppgave"}
@@ -81,6 +81,7 @@ class Table extends React.Component<ITableProps, ITableState> {
                   key={task.id}
                   {...task}
                   updateTable={this.getDataFromFirebase}
+                  uid={authState.authUser.uid}
                 />
               );
             })}
@@ -90,27 +91,22 @@ class Table extends React.Component<ITableProps, ITableState> {
     );
   }
 
-  private hasChanged = () => {
-    const { updateModalState } = this.props;
+  componentDidMount() {
     this.getDataFromFirebase();
-    updateModalState();
-  };
+  }
 
   private getDataFromFirebase = () => {
-    const {updateLoaderState} = this.props;
+    const { updateLoaderState, authState } = this.props;
     updateLoaderState();
-    setTimeout(() => {
-      database()
-      .getTasks()
+    database()
+      .getTasks(authState.authUser.uid)
       .then(snapshot => {
         this.setState({
           tasks: [snapshot.val()]
         });
         updateLoaderState();
       });
-    }, 5000);
-    
   };
 }
 
-export default withModalContext<any>(withLoaderContext(Table));
+export default withAuthContext<any>(withModalContext<any>(withLoaderContext(Table)));

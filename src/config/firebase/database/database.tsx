@@ -5,17 +5,17 @@ import * as firebase from 'firebase';
 export default function database() {
     const database = getDatabase();
     const functions = {
-        getTasks: () => {
-            return database.ref('tasks').once('value');
+        getTasks: (userId) => {
+            return database.ref(`users/${userId}/tasks`).once('value');
         },
 
-        addTask: (task, time, description) => {
-            let id = database.ref('tasks').push().key;
+        addTask: (userId, task, time, description) => {
+            let id = database.ref(`users/${userId}/tasks/`).push().key;
             let model = taskModel(id, task, time, description, firebase.database.ServerValue.TIMESTAMP.toString());
-            return database.ref('tasks/' + id).set(model);
+            return database.ref(`users/${userId}/tasks/` + id).set(model);
         },
-        updateTask: (taskId, time) => {
-            database.ref(`tasks/${taskId}`).update({
+        updateTask: (userId, taskId, time) => {
+            database.ref(`users/${userId}/tasks/${taskId}`).update({
                 time: time
             }, function (error) {
                 if (error) {
@@ -25,8 +25,8 @@ export default function database() {
                 }
             });
         },
-        deleteTask: (taskId) => {
-            database.ref(`tasks/${taskId}`).remove();
+        deleteTask: (userId, taskId) => {
+            database.ref(`users/${userId}/tasks/${taskId}`).remove();
         }
     }
 

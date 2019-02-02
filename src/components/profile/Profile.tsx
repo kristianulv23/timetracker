@@ -47,19 +47,17 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
     const { profile } = this.props;
     console.log(profile);
     return (
-      <React.Fragment>
-        <div
-          className={Profile.styleClass.profile(hidden)}
-          onClick={() => this.toggleProfile()}
-        >
-          <UserImage />
-        </div>
+      <div
+        className={Profile.styleClass.profile(hidden)}
+        onClick={() => this.toggleProfile()}
+      >
+        <UserImage />
         {hidden ? null : (
           <div
             className={
               "ulv__absolute ulv__w-80 ulv__h-48 ulv__bg-green-secondary"
             }
-            style={{ top: "4.5rem" }}
+            style={{ top: "4.5rem", left: '-15rem' }}
           >
             <ul className={"ulv__list-reset ulv__m-4 ulv__text-white"}>
               <li className={"ulv__p-2"}>{profile.email}</li>
@@ -75,7 +73,7 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
             </ul>
           </div>
         )}
-      </React.Fragment>
+      </div>
     );
   }
 }

@@ -8,8 +8,8 @@ export interface IWithMenuContext {
     toggleMenu: () => void;
 }
 
-export const withMenuContext = <P extends IWithMenuContext>(Component: React.ComponentType<P>) =>
-    class WithMenuContext extends React.PureComponent<Subtract<P, IWithMenuContext>> {
+export const withMenuContext = <P extends IWithMenuContext>(Component: React.ComponentType<any>) =>
+    class WithMenuContext extends React.PureComponent<Subtract<any, IWithMenuContext>> {
         public render() {
             return (
                 <MenuConsumer>

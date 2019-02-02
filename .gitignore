@@ -10,6 +10,15 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# public folder
+public
+
+# firebase
+.firebase
+.firebaserc
+install
+database.rules.json
+
 # Runtime data
 pids
 *.pid

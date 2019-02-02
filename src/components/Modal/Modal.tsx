@@ -8,7 +8,8 @@ import database from '../../config/firebase/database/database';
 
 
 export interface IModalProps extends IWithModalContext {
-    toggleModal: () => void;
+    getDataFromFirebase: () => void;
+    uid: string;
 }
 
 export interface IModalState {
@@ -75,10 +76,11 @@ class Modal extends React.Component<IModalProps, IModalState> {
     }
 
     private addTask = () => {
-        const { toggleModal } = this.props;
+        const { getDataFromFirebase, updateModalState, uid } = this.props;
         const { task, description } = this.state;
-        database().addTask(task, 0, description);
-        toggleModal();
+        database().addTask(uid, task, 0, description);
+        getDataFromFirebase();
+        updateModalState();
     }
 }
 

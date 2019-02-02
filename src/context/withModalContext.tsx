@@ -9,8 +9,8 @@ export interface IWithModalContext {
     toggleModal: () => void;
 }
 
-export const withModalContext = <P extends IWithModalContext>(Component: React.ComponentType<P>) =>
-    class WithModalContext extends React.PureComponent<Subtract<P, IWithModalContext>> {
+export const withModalContext = <P extends IWithModalContext>(Component: React.ComponentType<any>) =>
+    class WithModalContext extends React.PureComponent<Subtract<any, IWithModalContext>> {
         public render() {
             return (
                 <ModalConsumer>

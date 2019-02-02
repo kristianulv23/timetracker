@@ -10,6 +10,7 @@ export interface ITableRowProps {
   time: number;
   description: string;
   updateTable: () => void;
+  uid: string;
 }
 
 export interface ITableRowState {
@@ -98,7 +99,7 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
   }
 
   private toggleTimer = () => {
-    const { id } = this.props;
+    const { id, uid } = this.props;
     const { time, timerActive, interval } = this.state;
     let seconds = time;
     if (!timerActive) {
@@ -116,35 +117,35 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
       });
       clearInterval(interval);
     }
-    database().updateTask(id, seconds);
+    database().updateTask(uid, id, seconds);
   };
 
   private reset = () => {
     const { interval, timerActive } = this.state;
-    const { id } = this.props;
+    const { id, uid } = this.props;
     this.setState({
       time: 0,
       timerActive: timerActive ? !timerActive : null
     });
-    database().updateTask(id, 0);
+    database().updateTask(uid, id, 0);
     clearInterval(interval);
   };
 
   private delete = () => {
-    const { id, updateTable } = this.props;
+    const { id, updateTable, uid } = this.props;
     const { isDeletingTask } = this.state;
     this.setState({
       isDeletingTask: !isDeletingTask
     });
-    database().deleteTask(id);
+    database().deleteTask(uid, id);
     updateTable();
   };
 
   componentWillUnmount() {
     const { time, isDeletingTask } = this.state;
-    const { id } = this.props;
+    const { id, uid } = this.props;
     if (time > 0 && !isDeletingTask) {
-      database().updateTask(id, time);
+      database().updateTask(uid, id, time);
     }
   }
 }

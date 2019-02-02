@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Route, Redirect } from "react-router-dom";
-import { RouteEnum } from "../router/RouteEnums";
+import { RouteEnum } from "../routes/RouteEnums";
 
 export default function PrivateRoute({
   component: Component,

@@ -1,14 +1,15 @@
 import * as React from "react";
-import Routers from '../router/Route';
+import Routers from '../routes/Route';
 import { classNames } from "../../utils/utils";
 import Body from "../components/Body/Body";
+import { Switch } from 'react-router'
 import MenuContextProvider from '../context/MenuContext';
 import ModalContextProvider from '../context/ModalContext';
 import AuthContextProvider from '../context/AuthContext';
 import LoaderContextProvider from '../context/LoaderContext';
 import Header from '../components/Header/Header';
 import Menu from '../components/Menu/Menu';
-import { init as firebaseInit } from '../config/firebase/firebase';
+import { init as initializeFirebase } from '../config/firebase/firebase';
 
 export class App extends React.Component<{}, {}> {
 
@@ -17,7 +18,7 @@ export class App extends React.Component<{}, {}> {
         this.state = {
             authenticated: false
         }
-        firebaseInit();
+        initializeFirebase();
     }
 
     static styleClass = {
@@ -32,15 +33,17 @@ export class App extends React.Component<{}, {}> {
             <div className={App.styleClass.root}>
                 <AuthContextProvider>
                     <LoaderContextProvider>
-                    <MenuContextProvider>
-                        <ModalContextProvider>
-                            <Menu />
-                            <Header />
-                            <Body>
-                                <Routers />
-                            </Body>
-                        </ModalContextProvider>
-                    </MenuContextProvider>
+                        <MenuContextProvider>
+                            <ModalContextProvider>
+                                <Menu />
+                                <Header />
+                                <Body>
+                                    <Switch>
+                                        <Routers />
+                                    </Switch>
+                                </Body>
+                            </ModalContextProvider>
+                        </MenuContextProvider>
                     </LoaderContextProvider>
                 </AuthContextProvider>
             </div>

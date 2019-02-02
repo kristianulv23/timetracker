@@ -8,8 +8,8 @@ export interface IWithLoaderContext {
     updateLoaderState: () => void;
 }
 
-export const withLoaderContext = <P extends IWithLoaderContext>(Component: React.ComponentType<P>) =>
-    class WithLoaderContext extends React.PureComponent<Subtract<P, IWithLoaderContext>> {
+export const withLoaderContext = <P extends IWithLoaderContext>(Component: React.ComponentType<any>) =>
+    class WithLoaderContext extends React.PureComponent<Subtract<any, IWithLoaderContext>> {
         public render() {
             return (
                 <LoaderConsumer>
