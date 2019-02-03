@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { classNames } from '../../../utils/utils';
-import { signOutFirebaseUser } from '../../config/firebase/auth/authentication';
+import { signOutFirebaseUser } from '../../firebase/auth/authentication';
 import UserImage from '../UserImage/UserImage';
 import { Link } from 'react-router-dom';
 
@@ -30,6 +30,7 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
         'ulv__relative',
         'ulv__w-20',
         'hover__ulv__bg-green-secondary-1',
+        'ulv__cursor-pointer',
         hidden ? '' : 'ulv__bg-green-secondary-1'
       )
   };
@@ -63,7 +64,7 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
                 className={'ulv__text-white ulv__cursor-pointer'}
                 onClick={() => signOutFirebaseUser()}
                 to={'/'}>
-              <li className={'ulv__p-6 hover__ulv__bg-green-secondary'}>
+              <li className={'ulv__p-4 hover__ulv__bg-green-secondary'}>
                   Logg ut
               </li>
               </Link>

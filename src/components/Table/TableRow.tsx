@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { classNames, convertToHHMMSS } from '../../../utils/utils';
 import { DefaultButton } from '../shared/Button/DefaultButton/DefaultButton';
-import database from '../../config/firebase/database/database';
+import database from '../../firebase/database/database';
 import TableCell from '../Table/TableCell';
 
 export interface ITableRowProps {
@@ -69,7 +69,7 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
         <div className={'ulv__flex ulv__w-full ulv__absolute ulv__h-full'}>
           <TableCell className={'ulv__justify-center'}>{task}</TableCell>
           <TableCell className={'ulv__justify-center'}>{description}</TableCell>
-          <TableCell className={'ulv__justify-center'}>{convertToHHMMSS(time)}<span className={timerActive ? 'timer' : ''} /></TableCell>
+          <TableCell className={'ulv__justify-center ulv__font-bold'}>{convertToHHMMSS(time)}<span className={timerActive ? 'timer' : ''} /></TableCell>
           <TableCell className={classNames('ulv__justify-end ulv__mr-8')}>
             <div className={'ulv__mr-2'}>
               <DefaultButton

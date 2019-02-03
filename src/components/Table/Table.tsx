@@ -2,7 +2,7 @@ import * as React from 'react';
 import { classNames, snapshotToArray } from '../../../utils/utils';
 import TableRow from './TableRow';
 import { DefaultButton } from '../shared/Button/DefaultButton/DefaultButton';
-import database from '../../config/firebase/database/database';
+import database from '../../firebase/database/database';
 import {
   IWithModalContext,
   withModalContext
@@ -50,7 +50,7 @@ class Table extends React.Component<ITableProps, ITableState> {
     ),
     table: classNames('ulv__flex', 'ulv__flex-col', 'ulv__p-8'),
     tableHead: classNames('ulv__flex', 'ulv__bg-green-primary', 'ulv__mt-17', 'ulv__text-lg', 'head'),
-    button: classNames('ulv__bg-green-tertiary', 'ulv__w-32', 'hover__ulv__bg-green-secondary')
+    button: classNames('ulv__bg-blue-primary', 'ulv__w-32', 'hover__ulv__bg-blue-secondary', 'ulv__text-base')
   };
 
   render() {

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Input } from '../shared/Input/Input';
 import { classNames } from '../../../utils/utils';
 import { DefaultButton } from '../shared/Button/DefaultButton/DefaultButton';
-import { signInFirebaseUser } from '../../config/firebase/auth/authentication';
+import { signInFirebaseUser, createFirebaseUser } from '../../firebase/auth/authentication';
 import {
   IWithLoaderContext,
   withLoaderContext
@@ -15,6 +15,7 @@ interface ILoginProps extends IWithLoaderContext {
 interface ILoginState {
   email: string;
   password: string;
+  message: string;
 }
 
 class Login extends React.Component<ILoginProps, ILoginState> {
@@ -22,7 +23,8 @@ class Login extends React.Component<ILoginProps, ILoginState> {
     super(props);
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      message: ''
     };
   }
 
@@ -38,21 +40,46 @@ class Login extends React.Component<ILoginProps, ILoginState> {
       'login'
     ),
     form: classNames('ulv__flex', 'ulv__flex-col', 'ulv__p-16'),
-    button: classNames('ulv__bg-green-tertiary', 'ulv__w-full', 'hover__ulv__bg-green-secondary'),
+    button: classNames('ulv__bg-blue-primary', 'ulv__w-full', 'hover__ulv__bg-blue-secondary', 'ulv__my-2'),
     input: classNames('ulv__mb-4')
   };
 
   authWithEmailPassword(event) {
     event.preventDefault();
-    const {updateLoaderState} = this.props;
+    const { updateLoaderState } = this.props;
     const { email, password } = this.state;
     updateLoaderState();
+    
     signInFirebaseUser(email, password).then(() => {
+      updateLoaderState();
+    }).catch(() => {
+      this.setState({
+        message: 'Ugyldig bruker, vennligst prøv igjen.'
+      })
       updateLoaderState();
     });
   }
 
+  createFirebaseUser() {
+    const { updateLoaderState } = this.props;
+    const { email, password } = this.state;
+
+    updateLoaderState();
+    createFirebaseUser(email, password).then((user) => {
+      this.setState({
+        message: `Bruker ${user.user.displayName} laget.`
+      })
+      updateLoaderState();
+    }).catch((e) => {
+      this.setState({
+        message: 'Noe gikk galt, vennligst prøv igjen.'
+      })
+      updateLoaderState();
+    })
+  }
+
   render() {
+    const { message } = this.state;
     return (
       <div className={Login.styleClass.formWrapper}>
         <form
@@ -75,7 +102,21 @@ class Login extends React.Component<ILoginProps, ILoginState> {
             className={Login.styleClass.button}
             type='submit'
           />
+          <DefaultButton
+            text={'Registrer bruker'}
+            className={Login.styleClass.button}
+            type={'button'}
+            onClick={() => this.createFirebaseUser()}
+          />
         </form>
+        {message ?
+          <div className={'ulv__mx-16 ulv__bg-white ulv__p-2'}>
+            <p className={'ulv__p-2'}>{message}</p>
+          </div>
+          :
+          null
+        }
+
       </div>
     );
   }

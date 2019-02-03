@@ -135,7 +135,8 @@ let colors = {
   'green-secondary-1': '#2b5968',
   'green-tertiary': '#689D99',
   'green-tertiary-2': '#d5e5e8',
-  'blue-primary': '#0C88FF'
+  'blue-primary': '#2F6EB2',
+  'blue-secondary': '#29609b'
 }
 
 module.exports = {

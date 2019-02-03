@@ -3,16 +3,13 @@ import * as firebase from "firebase";
 export const createFirebaseUser = (email: string, password: string) => {
   return firebase
     .auth()
-    .createUserWithEmailAndPassword(email, password)
-    .catch(error => {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-    });
+    .createUserWithEmailAndPassword(email, password);
 };
 
 export const signInFirebaseUser = (email: string, password: string) => {
-  return firebase.auth().signInWithEmailAndPassword(email, password);
+  return firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(() => {
+    return firebase.auth().signInWithEmailAndPassword(email, password);
+  });
 };
 
 export const signOutFirebaseUser = () => {

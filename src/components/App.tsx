@@ -9,7 +9,7 @@ import AuthContextProvider from '../context/AuthContext';
 import LoaderContextProvider from '../context/LoaderContext';
 import Header from '../components/Header/Header';
 import Menu from '../components/Menu/Menu';
-import { init as initializeFirebase } from '../config/firebase/firebase';
+import { init as initializeFirebase } from '../firebase/firebase';
 
 export class App extends React.Component<{}, {}> {
 
