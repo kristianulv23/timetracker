@@ -13,7 +13,7 @@ const styles = {
     'ulv__relative',
     'ulv__h-screen',
     'ulv__w-screen',
-    'ulv__bg-green-secondary'
+    'ulv__bg-green-tertiary'
   )
 };
 

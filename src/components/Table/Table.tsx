@@ -44,7 +44,7 @@ class Table extends React.Component<ITableProps, ITableState> {
       'ulv__absolute',
       'ulv__pin-t',
       'ulv__pin-r',
-      'ulv__bg-green-secondary',
+      'ulv__bg-green-tertiary',
       'ulv__w-full',
       'ulv__h-auto'
     ),

@@ -29,7 +29,7 @@ class Menu extends React.Component<IMenuProps, {}> {
         root: (active: boolean) => classNames(
             'ulv__fixed',
             'ulv__z-20',
-            'ulv__bg-green-primary',
+            'ulv__bg-green-secondary-1',
             'ulv__h-full',
             'ulv__w-full',
             'md__ulv__w-64',

@@ -14,7 +14,7 @@ class MenuList extends React.Component<IMenuProps, {}> {
         root: classNames(
             'ulv__flex',
             'ulv__cursor-pointer',
-            'hover__ulv__bg-green-secondary-1',
+            'hover__ulv__bg-green-secondary',
             'ulv__h-12',
             'ulv__w-full',
             'ulv__items-center'
