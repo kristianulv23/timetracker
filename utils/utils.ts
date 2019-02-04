@@ -49,3 +49,32 @@ export function snapshotToArray(snapshot: ITasks[]) {
     });
     return array;
 };
+
+export function getFirebaseErrorMessage(code: string) {
+    let message = '';
+    switch (code) {
+        case "auth/email-already-in-use":
+            message = 'E-postadressen er allerede i bruk av en annen konto.';
+            break;
+        case "auth/weak-password":
+            message = 'Passord må bestå av minst 6 tegn.'
+            break;
+        case "auth/invalid-email":
+            message = 'Kontroller at epostadressen har riktig format.'
+            break;
+        case "auth/wrong-password":
+            message = 'Passordet er ugyldig.'
+            break;
+        default:
+            break;
+    }
+    return message;
+}
+
+export function convertHHMMSSToSeconds(time: string) {
+    // your input string
+    var a = time.split(':'); // split it at the colons
+
+    // minutes are worth 60 seconds. Hours are worth 60 minutes.
+    return(+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
+}

@@ -4,7 +4,7 @@ import {
   IWithAuthContext,
   withAuthContext
 } from "../../context/withAuthContext";
-import Profile from "../profile/Profile";
+import Profile from "../Profile/Profile";
 
 interface IHeaderProps extends IWithAuthContext {
   authState: any;

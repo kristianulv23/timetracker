@@ -8,7 +8,6 @@ export default function database() {
         getTasks: (userId) => {
             return database.ref(`users/${userId}/tasks`).once('value');
         },
-
         addTask: (userId, task, time, description) => {
             let id = database.ref(`users/${userId}/tasks/`).push().key;
             let model = taskModel(id, task, time, description, firebase.database.ServerValue.TIMESTAMP.toString());

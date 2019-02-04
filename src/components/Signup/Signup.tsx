@@ -2,24 +2,26 @@ import * as React from 'react';
 import { Input } from '../shared/Input/Input';
 import { classNames, getFirebaseErrorMessage } from '../../../utils/utils';
 import { DefaultButton } from '../shared/Button/DefaultButton/DefaultButton';
-import { signInFirebaseUser } from '../../firebase/auth/authentication';
+import { RouteEnum } from '../../routes/RouteEnums';
+
+
+import { createFirebaseUser } from '../../firebase/auth/authentication';
 import {
   IWithLoaderContext,
   withLoaderContext
 } from '../../context/withLoaderContext';
-import { RouteEnum } from '../../routes/RouteEnums';
 
-interface ILoginProps extends IWithLoaderContext {
+interface ISignupProps extends IWithLoaderContext {
 
 }
 
-interface ILoginState {
+interface ISignupState {
   email: string;
   password: string;
   message: string;
 }
 
-class Login extends React.Component<ILoginProps, ILoginState> {
+class Signup extends React.Component<ISignupProps, ISignupState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -38,59 +40,64 @@ class Login extends React.Component<ILoginProps, ILoginState> {
       'ulv__min-w-98',
       'ulv__max-w-xs',
       'ulv__max-h-sm',
-      'login'
+      'signup'
     ),
-    form: classNames('ulv__flex', 'ulv__flex-col', 'ulv__p-16'),
-    loginButton: classNames('ulv__bg-green-tertiary-3', 'ulv__w-full', 'hover__ulv__bg-green-tertiary-4', 'ulv__my-2', 'ulv__text-center', 'ulv__cursor-pointer'),
-    registerButton: classNames('ulv__bg-blue-primary', 'ulv__w-full', 'hover__ulv__bg-blue-secondary', 'ulv__my-2', 'ulv__text-center', 'ulv__cursor-pointer'),
+    form: classNames('ulv__flex', 'ulv__flex-col', 'ulv__p-16', 'ulv__relative'),
+    registerButton: classNames('ulv__bg-blue-primary', 'ulv__w-full', 'hover__ulv__bg-blue-secondary', 'ulv__my-2'),
+    backButton: classNames('ulv__m-4 ulv__z-2 ulv__text-left ulv__absolute'),
     input: classNames('ulv__mb-4')
   };
 
-  authWithEmailPassword(event) {
+  createFirebaseUser(event) {
     event.preventDefault();
     const { updateLoaderState } = this.props;
     const { email, password } = this.state;
-    updateLoaderState();
 
-    signInFirebaseUser(email, password)
-      .then(() => { updateLoaderState() })
-      .catch(e => {
+    updateLoaderState();
+    createFirebaseUser(email, password)
+      .then((user) => {
+        this.setState({
+          message: `Bruker ${user.user.displayName} laget.`
+        }, () => updateLoaderState());
+      })
+      .catch((e) => {
         const message = getFirebaseErrorMessage(e.code);
         this.setState({ 
           message 
         }, () => updateLoaderState());
-      });
+      })
   }
 
   render() {
     const { message } = this.state;
     return (
-      <div className={Login.styleClass.formWrapper}>
+      <div className={Signup.styleClass.formWrapper}>
+        <DefaultButton
+          text={'tilbake'}
+          className={Signup.styleClass.backButton}
+          link={true}
+          linkTo={RouteEnum.LOGIN}
+        />
         <form
-          className={Login.styleClass.form}
-          onSubmit={e => this.authWithEmailPassword(e)}
+          className={Signup.styleClass.form}
+          onSubmit={e => this.createFirebaseUser(e)}
+          autoComplete="off"
         >
           <Input
-            className={Login.styleClass.input}
+            className={Signup.styleClass.input}
             placeholder={'Epost'}
             onChange={e => this.setState({ email: e.target.value })}
           />
           <Input
-            className={Login.styleClass.input}
+            className={Signup.styleClass.input}
             placeholder={'Passord'}
             type={'password'}
             onChange={e => this.setState({ password: e.target.value })}
           />
           <DefaultButton
-            text={'Logg inn'}
-            className={Login.styleClass.loginButton}
-            type='submit'
-          />
-          <DefaultButton
-            text={'Registrer bruker'}
-            className={Login.styleClass.registerButton}
-            link={true}
-            linkTo={RouteEnum.SIGNUP}
+            text={'Registrer'}
+            className={Signup.styleClass.registerButton}
+            type={'submit'}
           />
         </form>
         {message ?
@@ -105,4 +112,4 @@ class Login extends React.Component<ILoginProps, ILoginState> {
   }
 }
 
-export default withLoaderContext(Login);
+export default withLoaderContext(Signup);

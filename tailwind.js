@@ -135,6 +135,8 @@ let colors = {
   'green-secondary-1': '#2b5968',
   'green-tertiary': '#689D99',
   'green-tertiary-2': '#d5e5e8',
+  'green-tertiary-3': '#67ab5b',
+  'green-tertiary-4': '#62a356',
   'blue-primary': '#2F6EB2',
   'blue-secondary': '#29609b'
 }
@@ -917,9 +919,9 @@ module.exports = {
     backgroundSize: ['responsive'],
     borderCollapse: [],
     borderColors: ['responsive', 'hover', 'focus'],
-    borderRadius: ['responsive'],
-    borderStyle: ['responsive'],
-    borderWidths: ['responsive'],
+    borderRadius: ['responsive', 'hover'],
+    borderStyle: ['responsive', 'hover'],
+    borderWidths: ['responsive', 'hover'],
     cursor: ['responsive'],
     display: ['responsive'],
     flexbox: ['responsive'],
