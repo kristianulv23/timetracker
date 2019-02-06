@@ -33,18 +33,23 @@ class Signup extends React.Component<ISignupProps, ISignupState> {
 
   static styleClass = {
     formWrapper: classNames(
-      'ulv__absolute',
-      'ulv__pin',
-      'ulv__m-auto',
+      'md__ulv__absolute',
+      'md__ulv__pin',
+      'md__ulv__m-auto',
       'ulv__bg-green-primary',
-      'ulv__min-w-98',
-      'ulv__max-w-xs',
-      'ulv__max-h-sm',
-      'signup'
+      'md__ulv__min-w-98',
+      'md__ulv__max-w-xs',
+      'md__ulv__max-h-sm',
+      'ulv__w-screen',
+      'ulv__h-screen',
+      'ulv__relative',
+      'md__ulv__w-full',
+      'md__ulv__h-full',
+      'login'
     ),
-    form: classNames('ulv__flex', 'ulv__flex-col', 'ulv__p-16', 'ulv__relative'),
-    registerButton: classNames('ulv__bg-blue-primary', 'ulv__w-full', 'hover__ulv__bg-blue-secondary', 'ulv__my-2'),
-    backButton: classNames('ulv__m-4 ulv__z-2 ulv__text-left ulv__absolute'),
+    form: classNames('ulv__flex', 'ulv__flex-col', 'ulv__p-16', 'ulv__justify-center', 'ulv__w-full', 'ulv__absolute', 'ulv__pin'),
+    backButton: classNames('ulv__p-8 ulv__z-10 ulv__text-left ulv__absolute md__ulv__inherit', 'ulv__pin-r'),
+    registerButton: classNames('ulv__bg-blue-primary', 'ulv__w-full', 'hover__ulv__bg-blue-secondary', 'ulv__my-2', 'ulv__text-center', 'ulv__cursor-pointer'),
     input: classNames('ulv__mb-4')
   };
 
@@ -62,8 +67,8 @@ class Signup extends React.Component<ISignupProps, ISignupState> {
       })
       .catch((e) => {
         const message = getFirebaseErrorMessage(e.code);
-        this.setState({ 
-          message 
+        this.setState({
+          message
         }, () => updateLoaderState());
       })
   }

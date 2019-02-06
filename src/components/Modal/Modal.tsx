@@ -33,7 +33,7 @@ class Modal extends React.Component<IModalProps, IModalState> {
             'ulv__items-center',
             'ulv__fixed',
             'ulv__pin',
-            'ulv__z-40'
+            'ulv__z-40',
         ),
         modal: classNames(
             'ulv__bg-green-primary',
@@ -42,12 +42,20 @@ class Modal extends React.Component<IModalProps, IModalState> {
             'ulv__min-h-sm',
             'ulv__m-auto',
             'ulv__z-50',
-            'modal'
+            'modal',
+            'ulv__relative'
         ),
         form: classNames(
             'ulv__flex',
             'ulv__flex-col',
-            'ulv__p-16'
+            'ulv__justify-center',
+            'ulv__p-16',
+            'ulv__text-white',
+            'ulv__w-screen',
+            'ulv__h-screen',
+            'ulv__relative',
+            'md__ulv__w-full',
+            'md__ulv__h-full'
         ),
         button: classNames(
             'ulv__bg-blue-primary',
@@ -65,7 +73,8 @@ class Modal extends React.Component<IModalProps, IModalState> {
             <div className={Modal.styleClass.backdrop} style={{ backgroundColor: 'rgba(0,0,0,0.3)' }} onClick={() => updateModalState()}>
                 <div className={Modal.styleClass.modal} onClick={(e) => e.stopPropagation()}>
                     <div className={Modal.styleClass.form}>
-                        <Input className={Modal.styleClass.input} placeholder={'Oppgave'} onChange={(e) => this.setState({ task: e.target.value })} value={'SNOAM-'} autoFocus maxLength={10}/>
+                        <span className={'ulv__absolute ulv__pin-t ulv__pin-r ulv__p-4 ulv__cursor-pointer ulv__text-center'} onClick={() => updateModalState()}>X</span>
+                        <Input className={Modal.styleClass.input} placeholder={'Oppgave'} onChange={(e) => this.setState({ task: e.target.value })} value={'SNOAM-'} autoFocus maxLength={10} />
                         <Textarea className={Modal.styleClass.input} placeholder={'Beskrivelse'} onChange={(e) => this.setState({ description: e.target.value })} />
                         <DefaultButton text={'Opprett oppgave'} className={Modal.styleClass.button} onClick={() => this.addTask()} />
                     </div>
