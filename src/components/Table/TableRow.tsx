@@ -14,7 +14,7 @@ export interface ITableRowProps {
 }
 
 export interface ITableRowState {
-  time: number;
+  timer: number;
   interval: any;
   paused: boolean;
   timerActive: boolean;
@@ -25,7 +25,7 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
   constructor(props) {
     super(props);
     this.state = {
-      time: 0,
+      timer: this.props.time,
       interval: null,
       paused: false,
       timerActive: false,
@@ -54,22 +54,22 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
     )
   };
 
-  componentWillMount() {
-    const { time } = this.props;
-    this.setState({
-      time: time
-    });
-  }
-
   render() {
-    const { time, timerActive } = this.state;
-    const { task, description } = this.props;
+    const { timerActive, timer } = this.state;
+    const { task, description, uid, id, updateTable, time } = this.props;
     return (
       <div className={'ulv__relative ulv__items-center ulv__mb-px item'}>
         <div className={'ulv__flex ulv__w-full ulv__absolute ulv__h-full'}>
           <TableCell className={'ulv__justify-center'}>{task}</TableCell>
           <TableCell className={'ulv__justify-center'}>{description}</TableCell>
-          <TableCell className={'ulv__justify-center ulv__font-bold'}>{convertToHHMMSS(time)}<span className={timerActive ? 'timer' : ''} /></TableCell>
+          <TableCell
+            updateTable={updateTable}
+            className={'ulv__justify-center ulv__font-bold'}
+            allowEditMode={true}
+            userId={uid}
+            taskId={id}>{convertToHHMMSS(timer)}<span className={timerActive ? 'timer' : ''} 
+            />
+          </TableCell>
           <TableCell className={classNames('ulv__justify-end ulv__mr-8')}>
             <div className={'ulv__mr-2'}>
               <DefaultButton
@@ -98,37 +98,48 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
     );
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if(prevProps.time !== this.state.timer && !prevState.timerActive) {
+      this.setState({
+        timer: prevProps.time
+      })
+    }
+  }
+
   private toggleTimer = () => {
-    const { id, uid } = this.props;
-    const { time, timerActive, interval } = this.state;
-    let seconds = time;
+    const { id, uid, updateTable } = this.props;
+    const { timer, timerActive, interval } = this.state;
+    let seconds = timer;
     if (!timerActive) {
       let intervalId = setInterval(() => {
         seconds++;
         this.setState({
-          time: seconds,
-          interval: intervalId,
-          timerActive: !timerActive
+          timer: seconds,
         });
       }, 1000);
+      this.setState({
+        interval: intervalId,
+        timerActive: !timerActive
+      })
     } else {
+      database().updateTask(uid, id, seconds);
+      updateTable()
       this.setState({
         timerActive: !timerActive
       });
       clearInterval(interval);
     }
-    database().updateTask(uid, id, seconds);
   };
 
   private reset = () => {
-    const { interval, timerActive } = this.state;
-    const { id, uid } = this.props;
+    const { timerActive } = this.state;
+    const { id, uid, updateTable } = this.props;
     this.setState({
-      time: 0,
+      timer: 0,
       timerActive: timerActive ? !timerActive : null
     });
     database().updateTask(uid, id, 0);
-    clearInterval(interval);
+    updateTable()
   };
 
   private delete = () => {
@@ -142,10 +153,10 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
   };
 
   componentWillUnmount() {
-    const { time, isDeletingTask } = this.state;
+    const { timer, isDeletingTask } = this.state;
     const { id, uid } = this.props;
-    if (time > 0 && !isDeletingTask) {
-      database().updateTask(uid, id, time);
+    if (timer > 0 && !isDeletingTask) {
+      database().updateTask(uid, id, timer);
     }
   }
 }

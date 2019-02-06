@@ -26,6 +26,20 @@
   background-color: lightgrey;
 }
 
+.edit {
+  position: relative;
+  &:hover:after {
+    content: url(./static/images/edit.svg);
+    position: absolute;
+    right: 0;
+  }
+}
+
+.editor:focus {
+  outline: none;
+  background-color: inherit;
+}
+
 .timer {
     background-color: red;
     width: 0.5rem;
