@@ -41,7 +41,12 @@ class Modal extends React.Component<IReleaseProps, IReleaseState> {
             'ulv__flex-col',
             'ulv__items-center',
             'ulv__p-16',
-            'ulv__text-white'
+            'ulv__text-white',
+            'ulv__w-screen',
+            'ulv__h-screen',
+            'ulv__relative',
+            'md__ulv__w-full',
+            'md__ulv__h-full'
         ),
         button: classNames(
             'ulv__bg-blue-primary',
