@@ -9,6 +9,7 @@ import AuthContextProvider from '../context/AuthContext';
 import LoaderContextProvider from '../context/LoaderContext';
 import Header from '../components/Header/Header';
 import Menu from '../components/Menu/Menu';
+import Release from '../components/Release/Release';
 import { init as initializeFirebase } from '../firebase/firebase';
 
 export class App extends React.Component<{}, {}> {
@@ -42,6 +43,7 @@ export class App extends React.Component<{}, {}> {
                                         <Routers />
                                     </Switch>
                                 </Body>
+                                <Release />
                             </ModalContextProvider>
                         </MenuContextProvider>
                     </LoaderContextProvider>
