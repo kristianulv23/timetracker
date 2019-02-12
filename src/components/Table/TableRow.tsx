@@ -116,6 +116,7 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
         this.setState({
           timer: seconds,
         });
+        database().updateTask(uid, id, seconds);
       }, 1000);
       this.setState({
         interval: intervalId,
