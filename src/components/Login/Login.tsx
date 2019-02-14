@@ -98,7 +98,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
             linkTo={RouteEnum.SIGNUP}
           />
           {message ?
-            <div className={'ulv__m-0 ulv__mt-4 md__ulv__mx-16 ulv__bg-white ulv__p-2'}>
+            <div className={'ulv__m-0 ulv__mt-4 ulv__bg-white ulv__p-2'}>
               <p className={'ulv__p-2 ulv__text-center ulv__text-red'}>{message}</p>
             </div>
             :
