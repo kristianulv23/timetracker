@@ -67,8 +67,9 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
             className={'ulv__justify-center ulv__font-bold'}
             allowEditMode={true}
             userId={uid}
-            taskId={id}>{convertToHHMMSS(timer)}<span className={timerActive ? 'timer' : ''} 
-            />
+            taskId={id}
+            timerActive={timerActive}
+            >{convertToHHMMSS(timer)}<span/>
           </TableCell>
           <TableCell className={classNames('ulv__justify-end ulv__mr-8')}>
             <div className={'ulv__mr-2'}>
@@ -154,11 +155,12 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
   };
 
   componentWillUnmount() {
-    const { timer, isDeletingTask } = this.state;
+    const { timer, isDeletingTask, interval } = this.state;
     const { id, uid } = this.props;
     if (timer > 0 && !isDeletingTask) {
       database().updateTask(uid, id, timer);
     }
+    clearInterval(interval);
   }
 }
 
