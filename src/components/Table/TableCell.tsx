@@ -30,13 +30,14 @@ class TableCell extends React.Component<ITableCellProps, ITableCellState> {
   }
 
   static styleClass = {
-    root: (className: string, allowEditMode: boolean) => classNames(
+    root: (className: string, allowEditMode: boolean, timerIsActive: boolean) => classNames(
       'ulv__flex',
       'ulv__flex-1',
       'ulv__items-center',
       'ulv__relative',
       'ulv__cursor-pointer',
       allowEditMode ? 'edit' : '',
+      timerIsActive ? 'timerActive' : '',
       className
     )
   };
@@ -44,7 +45,7 @@ class TableCell extends React.Component<ITableCellProps, ITableCellState> {
   toggleEditMode = (e) => {
     const { editMode } = this.state;
     const { taskId, userId, updateTable, children } = this.props;
-    if(children[0] === e.target.value) return;
+    if (children[0] === e.target.value) return;
     this.setState({
       editMode: !editMode
     });
@@ -55,7 +56,7 @@ class TableCell extends React.Component<ITableCellProps, ITableCellState> {
   render() {
     const { className, allowEditMode, timerActive } = this.props;
     return (
-      <div className={TableCell.styleClass.root(className, allowEditMode)}>
+      <div className={TableCell.styleClass.root(className, allowEditMode, timerActive)}>
         {allowEditMode ?
           <React.Fragment>
             <Input
@@ -63,6 +64,7 @@ class TableCell extends React.Component<ITableCellProps, ITableCellState> {
               value={this.props.children[0]}
               onBlur={(e) => this.toggleEditMode(e)}
               className={'ulv__w-full ulv__h-full ulv__m-0 ulv__text-center editor'}
+              disabled={timerActive}
               autoFocus
             />
             <span className={timerActive ? 'timer' : ''} />

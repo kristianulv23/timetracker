@@ -28,7 +28,7 @@
 
 .edit {
   position: relative;
-  &:hover:after {
+  &:not(.timerActive):hover:after {
     content: url(./static/images/edit.svg);
     position: absolute;
     right: 0;
