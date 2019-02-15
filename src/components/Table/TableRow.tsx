@@ -56,7 +56,7 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
 
   render() {
     const { timerActive, timer } = this.state;
-    const { task, description, uid, id, updateTable, time } = this.props;
+    const { task, description, uid, id, updateTable } = this.props;
     return (
       <div className={'ulv__relative ulv__items-center ulv__mb-px item'}>
         <div className={'ulv__flex ulv__w-full ulv__absolute ulv__h-full'}>
@@ -91,6 +91,7 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
                 className={TableRow.styleClass.reset}
                 text={'Nullstill'}
                 onClick={() => this.reset()}
+                disabled={timer === 0}
               />
             </div>
           </TableCell>
