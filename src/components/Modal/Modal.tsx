@@ -74,7 +74,7 @@ class Modal extends React.Component<IModalProps, IModalState> {
                 <div className={Modal.styleClass.modal} onClick={(e) => e.stopPropagation()}>
                     <div className={Modal.styleClass.form}>
                         <span className={'ulv__absolute ulv__pin-t ulv__pin-r ulv__p-4 ulv__cursor-pointer ulv__text-center'} onClick={() => updateModalState()}>X</span>
-                        <Input className={Modal.styleClass.input} placeholder={'Oppgave'} onChange={(e) => this.setState({ task: e.target.value })} value={'SNOAM-'} autoFocus maxLength={10} />
+                        <Input className={Modal.styleClass.input} placeholder={'Oppgave'} onChange={(e) => this.setState({ task: e.target.value })} value={'SNOAM-'} autoFocus maxLength={11} />
                         <Textarea className={Modal.styleClass.input} placeholder={'Beskrivelse'} onChange={(e) => this.setState({ description: e.target.value })} />
                         <DefaultButton text={'Opprett oppgave'} className={Modal.styleClass.button} onClick={() => this.addTask()} />
                     </div>
