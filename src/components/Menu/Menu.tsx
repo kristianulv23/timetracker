@@ -6,7 +6,7 @@ import { IWithMenuContext, withMenuContext } from "../../context/withMenuContext
 
 const listItems = [
     {
-        title: 'Hjem',
+        title: 'Arkiv',
         path: '/'
     },
     {

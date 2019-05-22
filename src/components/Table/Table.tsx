@@ -18,7 +18,9 @@ import {
 } from '../../context/withAuthContext';
 import TableCell from '../Table/TableCell';
 
-export interface ITableProps extends IWithModalContext, IWithLoaderContext, IWithAuthContext { }
+export interface ITableProps extends IWithModalContext, IWithLoaderContext, IWithAuthContext {
+  isArchive?: boolean;
+}
 
 export interface ITableState {
   tasks: ITasks[];
@@ -55,9 +57,8 @@ class Table extends React.Component<ITableProps, ITableState> {
 
   render() {
     const { tasks } = this.state;
-    const { modalState, updateModalState, authState } = this.props;
+    const { modalState, updateModalState, authState, isArchive } = this.props;
     const data = snapshotToArray(tasks);
-
     return (
       <div className={Table.styleClass.root}>
         {modalState.active ? (
@@ -68,9 +69,17 @@ class Table extends React.Component<ITableProps, ITableState> {
             <TableCell className={'ulv__justify-center'}>Jira oppgave</TableCell>
             <TableCell className={'ulv__justify-center'}>Beskrivelse</TableCell>
             <TableCell className={'ulv__justify-center'}>Tid brukt</TableCell>
-            <TableCell className={classNames('ulv__justify-end ulv__mr-8')}>
-              <DefaultButton className={Table.styleClass.button} text={'Ny oppgave'} onClick={() => updateModalState()} />
-            </TableCell>
+            {isArchive
+              ?
+              <>
+                <TableCell className={'ulv__justify-center'}>Arkivert</TableCell>
+                <TableCell className={'ulv__justify-center'}></TableCell>
+              </>
+              :
+              <TableCell className={classNames('ulv__justify-end ulv__mr-8')}>
+                <DefaultButton className={Table.styleClass.button} text={'Ny oppgave'} onClick={() => updateModalState()} />
+              </TableCell>
+            }
           </div>
           <div className={'ulv__flex ulv__flex-col ulv__shadow-lg row'}>
             {data.map(task => {
@@ -80,6 +89,9 @@ class Table extends React.Component<ITableProps, ITableState> {
                   {...task}
                   updateTable={this.getDataFromFirebase}
                   uid={authState.authUser.uid}
+                  isArchive={isArchive}
+                  archivedAtDate={task.timestamp}
+                  archiveId={task.archiveId}
                 />
               );
             })}
@@ -94,16 +106,26 @@ class Table extends React.Component<ITableProps, ITableState> {
   }
 
   private getDataFromFirebase = () => {
-    const { updateLoaderState, authState } = this.props;
+    const { updateLoaderState, authState, isArchive } = this.props;
     updateLoaderState();
-    database()
-      .getTasks(authState.authUser.uid)
-      .then(snapshot => {
-        this.setState({
-          tasks: [snapshot.val()]
-        });
-        updateLoaderState();
-      });
+    isArchive ?
+      database()
+        .getArchivedTasks(authState.authUser.uid)
+        .then(snapshot => {
+          this.setState({
+            tasks: [snapshot.val()]
+          });
+          updateLoaderState();
+        })
+      :
+      database()
+        .getTasks(authState.authUser.uid)
+        .then(snapshot => {
+          this.setState({
+            tasks: [snapshot.val()]
+          });
+          updateLoaderState();
+        })
   };
 }
 

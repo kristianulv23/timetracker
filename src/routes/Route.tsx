@@ -9,7 +9,7 @@ import Signup from "../components/Signup/Signup";
 import PrivateRoute from "../routes/PrivateRoute";
 import { RouteEnum } from "../routes/RouteEnums";
 
-interface IRoutersProps extends IWithAuthContext {}
+interface IRoutersProps extends IWithAuthContext { }
 
 class Routers extends React.Component<IRoutersProps, {}> {
   render() {
@@ -19,13 +19,13 @@ class Routers extends React.Component<IRoutersProps, {}> {
         <PrivateRoute
           exact
           path={RouteEnum.HOME}
-          component={Home}
+          component={() => <Table isArchive={true} />}
           authenticated={authState.authUser !== null}
         />
         <PrivateRoute
           exact
           path={RouteEnum.TASK}
-          component={Table}
+          component={() => <Table />}
           authenticated={authState.authUser !== null}
         />
         <Route exact path={RouteEnum.CREATE} component={Modal} />

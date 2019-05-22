@@ -70,8 +70,8 @@ class Modal extends React.Component<IModalProps, IModalState> {
     render() {
         const { updateModalState } = this.props;
         return (
-            <div className={Modal.styleClass.backdrop} style={{ backgroundColor: 'rgba(0,0,0,0.3)' }} onClick={() => updateModalState()}>
-                <div className={Modal.styleClass.modal} onClick={(e) => e.stopPropagation()}>
+            <div className={Modal.styleClass.backdrop} style={{ backgroundColor: 'rgba(0,0,0,0.3)' }} onMouseDown={() => updateModalState()}>
+                <div className={Modal.styleClass.modal} onMouseDown={(e) => e.stopPropagation()}>
                     <div className={Modal.styleClass.form}>
                         <span className={'ulv__absolute ulv__pin-t ulv__pin-r ulv__p-4 ulv__cursor-pointer ulv__text-center'} onClick={() => updateModalState()}>X</span>
                         <Input className={Modal.styleClass.input} placeholder={'Oppgave'} onChange={(e) => this.setState({ task: e.target.value })} value={'SNOAM-'} autoFocus maxLength={11} />

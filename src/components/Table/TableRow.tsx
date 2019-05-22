@@ -3,6 +3,7 @@ import { classNames, convertToHHMMSS } from '../../../utils/utils';
 import { DefaultButton } from '../shared/Button/DefaultButton/DefaultButton';
 import database from '../../firebase/database/database';
 import TableCell from '../Table/TableCell';
+import * as moment from 'moment';
 
 export interface ITableRowProps {
   id: string;
@@ -11,6 +12,9 @@ export interface ITableRowProps {
   description: string;
   updateTable: () => void;
   uid: string;
+  isArchive?: boolean;
+  archivedAtDate: number;
+  archiveId: number;
 }
 
 export interface ITableRowState {
@@ -29,7 +33,7 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
       interval: null,
       paused: false,
       timerActive: false,
-      isDeletingTask: false
+      isDeletingTask: false,
     };
   }
 
@@ -47,53 +51,83 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
       'hover__ulv__bg-red-darker',
       'ulv__min-w-24'
     ),
+    archive: classNames(
+      'ulv__bg-yellow-darker',
+      'hover__ulv__bg-yellow-darkest',
+      'ulv__min-w-24'
+    ),
     reset: classNames(
       'ulv__bg-grey-dark',
       'hover__ulv__bg-grey-darker',
       'ulv__min-w-24'
+    ),
+    buttons: (isArchive: boolean) => classNames(
+      'ulv__justify-end',
+      isArchive ? 'ulv__mr-0' : 'ulv__mr-8'
     )
   };
 
   render() {
     const { timerActive, timer } = this.state;
-    const { task, description, uid, id, updateTable } = this.props;
+    const { task, description, uid, id, updateTable, isArchive, archivedAtDate } = this.props;
     return (
       <div className={'ulv__relative ulv__items-center ulv__mb-px item'}>
-        <div className={'ulv__flex ulv__w-full ulv__absolute ulv__h-full'}>
+        <div className={'ulv__flex ulv__w-full ulv__absolute ulv__h-full'} style={{ wordBreak: 'break-word' }}>
           <TableCell className={'ulv__justify-center'}>{task}</TableCell>
           <TableCell className={'ulv__justify-center'}>{description}</TableCell>
           <TableCell
             updateTable={updateTable}
             className={'ulv__justify-center ulv__font-bold'}
-            allowEditMode={true}
+            allowEditMode={!isArchive}
             userId={uid}
             taskId={id}
             timerActive={timerActive}
-            >{convertToHHMMSS(timer)}<span/>
+          >{convertToHHMMSS(timer)}<span />
           </TableCell>
-          <TableCell className={classNames('ulv__justify-end ulv__mr-8')}>
-            <div className={'ulv__mr-2'}>
-              <DefaultButton
-                className={TableRow.styleClass.toggleTimer(timerActive)}
-                text={timerActive ? 'Pause' : 'Start'}
-                onClick={() => this.toggleTimer()}
-              />
-            </div>
-            <div className={'ulv__mr-2'}>
-              <DefaultButton
-                className={TableRow.styleClass.delete}
-                text={'Slett'}
-                onClick={() => this.delete()}
-              />
-            </div>
-            <div className={''}>
-              <DefaultButton
-                className={TableRow.styleClass.reset}
-                text={'Nullstill'}
-                onClick={() => this.reset()}
-                disabled={timer === 0}
-              />
-            </div>
+          {isArchive &&
+            <TableCell className={'ulv__justify-center'}>{archivedAtDate}</TableCell>
+          }
+          <TableCell className={TableRow.styleClass.buttons(isArchive)}>
+            {!isArchive &&
+              <>
+                <div className={'ulv__mr-2'}>
+                  <DefaultButton
+                    className={TableRow.styleClass.toggleTimer(timerActive)}
+                    text={timerActive ? 'Pause' : 'Start'}
+                    onClick={() => this.toggleTimer()}
+                  />
+                </div>
+                <div className={'ulv__mr-2'}>
+                  <DefaultButton
+                    className={TableRow.styleClass.reset}
+                    text={'Nullstill'}
+                    onClick={() => this.reset()}
+                    disabled={timer === 0 || timerActive}
+                  />
+                </div>
+              </>
+            }
+
+            {isArchive ?
+              <div className={'ulv__absolute ulv__pin-l ulv__pin-r'}>
+                <DefaultButton
+                  disabled={timerActive}
+                  className={TableRow.styleClass.delete}
+                  text={'Slett'}
+                  onClick={() => this.delete()}
+                />
+              </div>
+              :
+              <div className={''}>
+                <DefaultButton
+                  disabled={timerActive}
+                  className={TableRow.styleClass.archive}
+                  text={'Arkiver'}
+                  onClick={() => this.archive()}
+                />
+              </div>
+            }
+
           </TableCell>
         </div>
       </div>
@@ -101,7 +135,7 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if(prevProps.time !== this.state.timer && !prevState.timerActive) {
+    if (prevProps.time !== this.state.timer && !prevState.timerActive) {
       this.setState({
         timer: prevProps.time
       })
@@ -146,12 +180,22 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
   };
 
   private delete = () => {
+    const { updateTable, uid, archiveId } = this.props;
+    const { isDeletingTask } = this.state;
+    this.setState({
+      isDeletingTask: !isDeletingTask
+    });
+    database().deleteTask(uid, archiveId);
+    updateTable();
+  };
+
+  private archive = () => {
     const { id, updateTable, uid } = this.props;
     const { isDeletingTask } = this.state;
     this.setState({
       isDeletingTask: !isDeletingTask
     });
-    database().deleteTask(uid, id);
+    database().archiveTask(uid, id);
     updateTable();
   };
 
