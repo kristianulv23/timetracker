@@ -13,6 +13,7 @@ export interface ITableRowProps {
   updateTable: () => void;
   uid: string;
   isArchive?: boolean;
+  createdAtDate: number;
   archivedAtDate: number;
   archiveId: number;
 }

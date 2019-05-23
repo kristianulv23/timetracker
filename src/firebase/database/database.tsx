@@ -31,7 +31,7 @@ export default function database() {
         archiveTask: (userId, taskId) => {
             database.ref(`users/${userId}/tasks/${taskId}`).once('value').then((snapshot) => {
                 const id = database.ref(`users/${userId}/archive/`).push().key;
-                database.ref(`users/${userId}/archive/` + id).set({ ...snapshot.val(), archiveId: id });
+                database.ref(`users/${userId}/archive/` + id).set({ ...snapshot.val(), archiveId: id, archiveDate: moment().format('LLL') });
                 database.ref(`users/${userId}/tasks/${taskId}`).remove();
             })
         },

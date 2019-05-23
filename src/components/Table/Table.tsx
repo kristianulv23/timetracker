@@ -90,7 +90,7 @@ class Table extends React.Component<ITableProps, ITableState> {
                   updateTable={this.getDataFromFirebase}
                   uid={authState.authUser.uid}
                   isArchive={isArchive}
-                  archivedAtDate={task.timestamp}
+                  archivedAtDate={task.archiveDate}
                   archiveId={task.archiveId}
                 />
               );

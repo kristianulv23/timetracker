@@ -65,7 +65,6 @@ class TableCell extends React.Component<ITableCellProps, ITableCellState> {
               onBlur={(e) => this.toggleEditMode(e)}
               className={'ulv__w-full ulv__h-full ulv__m-0 ulv__text-center editor'}
               disabled={timerActive}
-              autoFocus
             />
             <span className={timerActive ? 'timer' : ''} />
           </React.Fragment>
