@@ -37,7 +37,7 @@ class Table extends React.Component<ITableProps, ITableState> {
   constructor(props) {
     super(props);
     this.state = {
-      tasks: []
+      tasks: [],
     };
   }
 
@@ -82,7 +82,7 @@ class Table extends React.Component<ITableProps, ITableState> {
             }
           </div>
           <div className={'ulv__flex ulv__flex-col ulv__shadow-lg row'}>
-            {data.map(task => {
+            {data && data.map(task => {
               return (
                 <TableRow
                   key={task.id}

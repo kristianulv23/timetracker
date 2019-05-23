@@ -22,7 +22,6 @@ export interface ITableRowState {
   interval: any;
   paused: boolean;
   timerActive: boolean;
-  isDeletingTask: boolean;
 }
 
 class TableRow extends React.Component<ITableRowProps, ITableRowState> {
@@ -33,7 +32,6 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
       interval: null,
       paused: false,
       timerActive: false,
-      isDeletingTask: false,
     };
   }
 
@@ -43,7 +41,7 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
       classNames(
         !active
           ? 'ulv__bg-green hover__ulv__bg-green-dark'
-          : 'ulv__bg-grey hover__ulv__bg-grey-dark',
+          : 'ulv__bg-green-darker hover__ulv__bg-green-darkest',
         'ulv__min-w-24'
       ),
     delete: classNames(
@@ -52,8 +50,8 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
       'ulv__min-w-24'
     ),
     archive: classNames(
-      'ulv__bg-yellow-darker',
-      'hover__ulv__bg-yellow-darkest',
+      'ulv__bg-orange',
+      'hover__ulv__bg-orange-dark',
       'ulv__min-w-24'
     ),
     reset: classNames(
@@ -181,28 +179,21 @@ class TableRow extends React.Component<ITableRowProps, ITableRowState> {
 
   private delete = () => {
     const { updateTable, uid, archiveId } = this.props;
-    const { isDeletingTask } = this.state;
-    this.setState({
-      isDeletingTask: !isDeletingTask
-    });
+ 
     database().deleteTask(uid, archiveId);
     updateTable();
   };
 
   private archive = () => {
     const { id, updateTable, uid } = this.props;
-    const { isDeletingTask } = this.state;
-    this.setState({
-      isDeletingTask: !isDeletingTask
-    });
     database().archiveTask(uid, id);
     updateTable();
   };
 
   componentWillUnmount() {
-    const { timer, isDeletingTask, interval } = this.state;
+    const { timer, interval, timerActive } = this.state;
     const { id, uid } = this.props;
-    if (timer > 0 && !isDeletingTask) {
+    if (timer > 0 && timerActive) {
       database().updateTask(uid, id, timer);
     }
     clearInterval(interval);
