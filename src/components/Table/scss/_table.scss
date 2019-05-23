@@ -31,13 +31,21 @@
   &:not(.timerActive):hover:after {
     content: url(./static/images/edit.svg);
     position: absolute;
-    right: 0;
+    right: 1rem;
   }
 }
 
 .editor {
   outline: none;
   background-color: inherit;
+
+  &:hover {
+    border: 2px dashed grey;
+  }
+
+  &:focus {
+    border: 2px dashed grey;
+  }
 }
 
 .timer {
